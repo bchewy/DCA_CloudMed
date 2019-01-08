@@ -9,7 +9,7 @@ namespace WebRole1.Models
 {
     public class VideoHistory
     {
-
+        //
         public int VideoID { get; set; }
 
         [ForeignKey("Person")]
