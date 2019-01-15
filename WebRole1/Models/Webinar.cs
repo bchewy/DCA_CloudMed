@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebRole1.Models
 {
-    public class Webinar : Courses
+    public class Webinar : Course
     {
         public string URL { get; set; }
         public DateTime DateReleased { get; set; }

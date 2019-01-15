@@ -9,15 +9,20 @@ namespace WebRole1.Models
     public class Diagnosis
     {
         public int DiagnosisID { get; set; }
-        [ForeignKey("Consultation")]
-        public int ConsultationID { get; set; }
-        [ForeignKey("MedicalEquipment")]
-        public int MedicalEquipmentID { get; set; }
-        [ForeignKey("MedicalRecord")]
-        public int RecordID { get; set; }
+
+
+
+        //[ForeignKey("MedicalEquipment")]
+        //public int MedicalEquipmentID { get; set; }
+
+        //[ForeignKey("MedicalRecord")]
+        //public int RecordID { get; set; }
 
         public string Illness { get; set; }
         public string Description { get; set; }
+
+        [ForeignKey("Consultation")]
+        public int ConsultationID { get; set; }
 
         public virtual Consultation Consultation { get; set; }
         public virtual ICollection<MedicalEquipment> MedicalEquipments { get; set; }

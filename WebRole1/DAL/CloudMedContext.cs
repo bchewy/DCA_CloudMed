@@ -12,7 +12,7 @@ namespace WebRole1.DAL
         }
 
         public DbSet<Consultation> Consultations { get; set; }
-        public DbSet<Courses> Courses { get; set; }
+        public DbSet<Course> Courses { get; set; }
         public DbSet<Diagnosis> Diagnoses { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<MedicalEquipment> MedicalEquipment { get; set; }
@@ -20,9 +20,5 @@ namespace WebRole1.DAL
         public DbSet<Patient> Patients { get; set; }
         //Table for Person, Seminar or Webinar?
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-        }
     }
 }

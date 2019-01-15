@@ -9,13 +9,8 @@ namespace WebRole1.Models
 {
     public class Consultation
     {
+        [Key]
         public int ConsultationID { get; set; }
-
-        [ForeignKey("Patient")]
-        public int PatientID { get; set; }
-
-        [ForeignKey("Doctor")]
-        public int DoctorID { get; set; }
 
         public int QueueNo { get; set; }
 
@@ -25,7 +20,17 @@ namespace WebRole1.Models
         public string Status { get; set; }
         public string ConsultationType { get; set; }
 
+
+
+        [ForeignKey("Patient")]
+        public int PatientID { get; set; }
+
+        //ForeignKey("Doctor")]
+        //public int DoctorID { get; set; }
+
         public virtual Patient Patient { get; set; }
-        public virtual Doctor Doctor { get; set; }
+        //public virtual Doctor Doctor { get; set; }
+        public virtual ICollection<Doctor> Doctors { get; set; }
+        public virtual ICollection<Diagnosis> Diagnoses { get; set; }
     }
 }

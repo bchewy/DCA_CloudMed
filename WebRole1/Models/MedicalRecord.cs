@@ -11,11 +11,14 @@ namespace WebRole1.Models
     {
         [Key]
         public int RecordID { get; set; }
-        [ForeignKey("Diagnosis")]
-        public int DiagnosisID { get; set; }
+
+
 
         public string Description { get; set; }
         public string DocURL { get; set; }
+
+        [ForeignKey("Diagnosis")]
+        public int DiagnosisID { get; set; }
 
         public virtual Diagnosis Diagnosis { get; set; }
     }

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebRole1.Models
 {
-    public class Seminar : Courses
+    public class Seminar : Course
     {
 
         public int Duration { get; set; }
