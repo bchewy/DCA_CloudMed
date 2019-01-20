@@ -4,6 +4,9 @@ namespace WebRole1.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using WebRole1.Models;
+    using WebRole1.DAL;
+    using System.Collections.Generic;
 
     internal sealed class Configuration : DbMigrationsConfiguration<WebRole1.DAL.CloudMedContext>
     {
@@ -19,6 +22,20 @@ namespace WebRole1.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+            var patients = new List<Patient>
+            {
+                new Patient{
+                    ICNo ="t0031435d",
+                    Name="Jack Windsor",
+                    Gender='M',
+                    Citizenship="Singaporean",
+                    EmailAddr="jackwindsor@jackwindsor.com",
+                    Address="Buckingham Palace",
+                    DoB =new DateTime(1932,2,2)
+                }
+            };
+            patients.ForEach(p => context.Patients.AddOrUpdate(x => x.Name, p));
+            context.SaveChanges();
         }
     }
 }
