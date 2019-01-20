@@ -238,6 +238,7 @@
     <Compile Include="Models\MedicalEquipment.cs" />
     <Compile Include="Models\MedicalRecord.cs" />
     <Compile Include="Models\Patient.cs" />
+    <Compile Include="Models\PatientViewModel.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Seminar.cs" />
     <Compile Include="Models\VideoHistory.cs" />
@@ -305,7 +306,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Patients\Create.cshtml" />
     <Content Include="Views\Patients\Delete.cshtml" />
     <Content Include="Views\Patients\Details.cshtml" />
     <Content Include="Views\Patients\Edit.cshtml" />
@@ -320,6 +320,7 @@
     <Content Include="Views\Consultations\Details.cshtml" />
     <Content Include="Views\Consultations\Edit.cshtml" />
     <Content Include="Views\Consultations\Index.cshtml" />
+    <Content Include="Views\Patients\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -20,8 +20,6 @@ namespace WebRole1.Models
         public string Status { get; set; }
         public string ConsultationType { get; set; }
 
-
-
         [ForeignKey("Patient")]
         public int PatientID { get; set; }
 

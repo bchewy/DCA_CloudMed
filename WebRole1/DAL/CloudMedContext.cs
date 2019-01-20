@@ -18,6 +18,8 @@ namespace WebRole1.DAL
         public DbSet<MedicalEquipment> MedicalEquipment { get; set; }
         public DbSet<MedicalRecord> MedicalRecord { get; set; }
         public DbSet<Patient> Patients { get; set; }
+
+        public System.Data.Entity.DbSet<WebRole1.Models.PatientViewModel> PatientViewModels { get; set; }
         //Table for Person, Seminar or Webinar?
 
     }
