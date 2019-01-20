@@ -47,16 +47,26 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PatientID,Address,DoB,PersonID,ICNo,Name,Citizenship,EmailAddr")] Patient patient)
+        public ActionResult Create([Bind(Include = "PatientID,Address,DoB,PersonID,ICNo,Name,Citizenship,EmailAddr")] PatientViewModel PatientViewModel)
         {
             if (ModelState.IsValid)
             {
+                var patient = new Patient()
+                {
+                    ICNo = PatientViewModel.ICNo,
+                    Name = PatientViewModel.ICNo,
+                    Gender = PatientViewModel.Gender,
+                    Citizenship = PatientViewModel.Citizenship,
+                    EmailAddr = PatientViewModel.EmailAddr,
+                    Address = PatientViewModel.Address,
+                    DoB = PatientViewModel.DoB,
+                };
                 db.Patients.Add(patient);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(patient);
+            return View(PatientViewModel);
         }
 
         // GET: Patients/Edit/5

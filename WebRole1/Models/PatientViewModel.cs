@@ -18,15 +18,6 @@ namespace WebRole1.Models
         [Required (ErrorMessage = "Name is required.")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Address is required.")]
-        public string Address { get; set; }
-
-        [DataType(DataType.Date)]
-        [Display(Name = "Date of Birth")]
-        [Required(ErrorMessage = "Date of Birth is required.")]
-        public DateTime DoB { get; set; }
-
-
         [Required(ErrorMessage = "Gender is required.")]
         public char Gender { get; set; }
 
@@ -37,5 +28,14 @@ namespace WebRole1.Models
         [Required(ErrorMessage = "Email Address is required.")]
         [EmailAddress]
         public string EmailAddr { get; set; }
+
+        //Patient attributes
+        [Required(ErrorMessage = "Address is required.")]
+        public string Address { get; set; }
+
+        [DataType(DataType.Date)]
+        [Display(Name = "Date of Birth")]
+        [Required(ErrorMessage = "Date of Birth is required.")]
+        public DateTime DoB { get; set; }
     }
 }
