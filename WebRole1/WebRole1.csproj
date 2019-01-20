@@ -232,6 +232,10 @@
     <Compile Include="Migrations\201901151650496_InitialCreate.Designer.cs">
       <DependentUpon>201901151650496_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901201224034_initalsecond.cs" />
+    <Compile Include="Migrations\201901201224034_initalsecond.Designer.cs">
+      <DependentUpon>201901201224034_initalsecond.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Consultation.cs" />
@@ -346,6 +350,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201901151650496_InitialCreate.resx">
       <DependentUpon>201901151650496_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901201224034_initalsecond.resx">
+      <DependentUpon>201901201224034_initalsecond.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
