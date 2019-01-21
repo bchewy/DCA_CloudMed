@@ -14,12 +14,8 @@ namespace WebRole1.Models
         [ForeignKey("Consultation")]
         public int ConsultationID { get; set; }
 
-        //[ForeignKey("Course")]
-        //public int CourseID { get; set; }
-
         public string Specialty { get; set; }
 
-        //public virtual ICollection<Consultation> Consultations { get; set; }
         public virtual Consultation Consultation { get; set; }
         public virtual ICollection<Course> Courses { get; set; }
     }
