@@ -18,7 +18,6 @@ namespace WebRole1.Models
         //public int CourseID { get; set; }
 
         public string Specialty { get; set; }
-        public int FacultyID { get; set; }
 
         //public virtual ICollection<Consultation> Consultations { get; set; }
         public virtual Consultation Consultation { get; set; }
