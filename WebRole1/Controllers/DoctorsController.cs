@@ -49,7 +49,7 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DoctorID,ConsultationID,Specialty,FacultyID,PersonID,ICNo,Name,Citizenship,EmailAddr")] Doctor doctor)
+        public ActionResult Create([Bind(Include = "DoctorID,ConsultationID,Specialty,PersonID,ICNo,Name,Citizenship,EmailAddr")] Doctor doctor)
         {
             if (ModelState.IsValid)
             {
@@ -83,7 +83,7 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DoctorID,ConsultationID,Specialty,FacultyID,PersonID,ICNo,Name,Citizenship,EmailAddr")] Doctor doctor)
+        public ActionResult Edit([Bind(Include = "DoctorID,ConsultationID,Specialty,PersonID,ICNo,Name,Citizenship,EmailAddr")] Doctor doctor)
         {
             if (ModelState.IsValid)
             {
