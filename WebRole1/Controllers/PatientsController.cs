@@ -8,12 +8,75 @@ using System.Web;
 using System.Web.Mvc;
 using WebRole1.DAL;
 using WebRole1.Models;
+using Microsoft.WindowsAzure.Storage.Table.DataServices;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.ServiceRuntime;
+using Microsoft.WindowsAzure.Storage.RetryPolicies;
+using System.Threading.Tasks;
+using System.IO;
+using System.Diagnostics;
 
 namespace WebRole1.Controllers
 {
     public class PatientsController : Controller
     {
         private CloudMedContext db = new CloudMedContext();
+        private static CloudBlobContainer imagesBlobContainer;
+
+        public PatientsController()
+        {
+            InitStorage();
+        }
+        //Init Storage Method
+        private void InitStorage()
+        {
+            var storageAccount = CloudStorageAccount.Parse
+            (RoleEnvironment.GetConfigurationSettingValue
+            ("StorageConnectionString"));
+        
+            var blobClient = storageAccount.CreateCloudBlobClient();
+            blobClient.DefaultRequestOptions.RetryPolicy = new LinearRetry(TimeSpan.FromSeconds(3), 3); //Set permissions
+            imagesBlobContainer = blobClient.GetContainerReference("patientimages");
+            imagesBlobContainer.CreateIfNotExists();
+            imagesBlobContainer.SetPermissions(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
+        }
+
+        //Upload and Save Blob Method
+        private async Task<CloudBlockBlob> UploadAndSaveBlobAsync(HttpPostedFileBase imageFile)//Can be called and reliable under heavy loads
+        {
+            Trace.TraceInformation("Uploading image file {0}", imageFile.FileName);
+            string blobName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+            CloudBlockBlob imageBlob = imagesBlobContainer.GetBlockBlobReference(blobName);
+            using (var fileStream = imageFile.InputStream)
+            {
+                await imageBlob.UploadFromStreamAsync(fileStream);
+            }
+            Trace.TraceInformation("Uploaded image file to {0}", imageBlob.Uri.ToString());
+            return imageBlob;
+        }
+
+        //Delete Blob Method
+        private async Task DeleteBlobAsync(string imageURL)
+        {
+            if (!string.IsNullOrWhiteSpace(imageURL))
+            {
+                Uri blobUri = new Uri(imageURL);
+                string blobName = blobUri.Segments
+                [blobUri.Segments.Length - 1]; Trace.TraceInformation("Deleting image blob {0}", blobName);
+                CloudBlockBlob blobToDelete = imagesBlobContainer.
+                GetBlockBlobReference(blobName);
+                await blobToDelete.DeleteIfExistsAsync();
+
+            }
+
+        }
+
+
+
+
+
 
         // GET: Patients
         public ActionResult Index(string so)
@@ -62,14 +125,18 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PatientID,Address,DoB,PersonID,ICNo,Name,Citizenship,EmailAddr,PatientImageURL")] PatientViewModel PatientViewModel, HttpPostedFileBase file)
+        public async Task<ActionResult> Create([Bind(Include = "PatientID,Address,DoB,PersonID,ICNo,Name,Citizenship,EmailAddr,PatientImageURL")] PatientViewModel PatientViewModel,HttpPostedFileBase imageFile)
         {
+            CloudBlockBlob imageBlob = null;
             if (ModelState.IsValid)
             {
-                if (file != null)
+                if (imageFile != null && imageFile.ContentLength != 0)
                 {
-                    file.SaveAs(HttpContext.Server.MapPath("~/Images") + file.FileName);
+                    imageBlob = await UploadAndSaveBlobAsync(imageFile);
+                    PatientViewModel.PatientImageURL = imageBlob.Uri.ToString();
+                    Trace.TraceInformation("The Blob URL is:" + imageBlob.Uri.ToString());
                 }
+
                 var patient = new Patient()
                 {
                     ICNo = PatientViewModel.ICNo,
@@ -82,7 +149,7 @@ namespace WebRole1.Controllers
                     PatientImageURL = PatientViewModel.PatientImageURL
                 };
                 db.Patients.Add(patient);
-                db.SaveChanges();
+                await db.SaveChangesAsync(); 
                 return RedirectToAction("Index");
             }
 
@@ -109,15 +176,35 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PatientID,Address,DoB,PersonID,ICNo,Name,Citizenship,EmailAddr")] Patient patient)
+        public async Task<ActionResult> Edit([Bind(Include = "PatientID,Address,DoB,PersonID,ICNo,Name,Citizenship,EmailAddr,PatientImageURl")] PatientViewModel PatientViewModel, HttpPostedFileBase imageFile)
         {
+            CloudBlockBlob imageBlob = null;
             if (ModelState.IsValid)
             {
+                if (imageFile != null && imageFile.ContentLength != 0)
+                {
+                    await DeleteBlobAsync(PatientViewModel.PatientImageURL);
+                    imageBlob = await UploadAndSaveBlobAsync(imageFile);
+                    PatientViewModel.PatientImageURL = imageBlob.Uri.ToString();
+                }
+
+                var patient = db.Patients.Find(PatientViewModel.PatientID);
+
+                patient.ICNo = PatientViewModel.ICNo;
+                patient.Name = PatientViewModel.Name;
+                patient.Gender = PatientViewModel.Gender;
+                patient.Citizenship = PatientViewModel.Citizenship;
+                patient.EmailAddr = PatientViewModel.EmailAddr;
+                patient.Address = PatientViewModel.Address;
+                patient.DoB = PatientViewModel.DoB;
+                patient.PatientImageURL = PatientViewModel.PatientImageURL;
+
+
                 db.Entry(patient).State = EntityState.Modified;
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(patient);
+            return View(PatientViewModel);
         }
 
         // GET: Patients/Delete/5
@@ -138,11 +225,13 @@ namespace WebRole1.Controllers
         // POST: Patients/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Patient patient = db.Patients.Find(id);
+            await DeleteBlobAsync(patient.PatientImageURL);
             db.Patients.Remove(patient);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
+            Trace.TraceInformation("Delete {0}", patient.PatientID);
             return RedirectToAction("Index");
         }
 
