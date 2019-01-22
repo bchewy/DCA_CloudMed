@@ -37,6 +37,14 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BrianWorkerRole\BrianWorkerRole.csproj">
+      <Name>BrianWorkerRole</Name>
+      <Project>{8119c048-93af-42c9-8034-7d2b40d78cf8}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>BrianWorkerRole</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
     <ProjectReference Include="..\WebRole1\WebRole1.csproj">
       <Name>WebRole1</Name>
       <Project>{29b8e760-7644-4bf8-899e-63101f4cd9a8}</Project>
@@ -55,10 +63,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="BrianWorkerRoleContent\" />
     <Folder Include="WebRole1Content\" />
     <Folder Include="WorkerRole1Content\" />
   </ItemGroup>
   <ItemGroup>
+    <DiagnosticsConfiguration Include="BrianWorkerRoleContent\diagnostics.wadcfgx" />
     <DiagnosticsConfiguration Include="WebRole1Content\diagnostics.wadcfgx" />
     <DiagnosticsConfiguration Include="WorkerRole1Content\diagnostics.wadcfgx" />
   </ItemGroup>
