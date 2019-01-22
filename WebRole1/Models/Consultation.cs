@@ -15,9 +15,13 @@ namespace WebRole1.Models
         public int QueueNo { get; set; }
 
         [Display(Name = "Consultation Time")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy H:mm:ss tt}"), DataType(DataType.DateTime)]
+        [Required]
         public DateTime TimeStamp { get; set; }
 
+        [Required]
         public string Status { get; set; }
+        [Required]
         public string ConsultationType { get; set; }
 
         [ForeignKey("Patient")]
