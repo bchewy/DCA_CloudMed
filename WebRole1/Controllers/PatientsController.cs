@@ -16,9 +16,24 @@ namespace WebRole1.Controllers
         private CloudMedContext db = new CloudMedContext();
 
         // GET: Patients
-        public ActionResult Index()
+        public ActionResult Index(string so)
         {
-            return View(db.Patients.ToList());
+            ViewBag.NameSortParam = String.IsNullOrEmpty(so) ? "Name" : "";
+            ViewBag.DateSortParam = so == "DOB" ? "DOB" : "DOB";
+            var patients = from p in db.Patients select p;
+            switch (so)
+            {
+                case "Name":
+                    patients = patients.OrderByDescending(p => p.Name);
+                    break;
+                case "DOB":
+                    patients = patients.OrderBy(p => p.DoB);
+                    break;
+                default:
+                    patients = patients.OrderBy(s => s.ICNo);
+                    break;
+            }
+            return View(patients.ToList());
         }
 
         // GET: Patients/Details/5
@@ -47,19 +62,24 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PatientID,Address,DoB,PersonID,ICNo,Name,Citizenship,EmailAddr")] PatientViewModel PatientViewModel)
+        public ActionResult Create([Bind(Include = "PatientID,Address,DoB,PersonID,ICNo,Name,Citizenship,EmailAddr,PatientImageURL")] PatientViewModel PatientViewModel, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                if (file != null)
+                {
+                    file.SaveAs(HttpContext.Server.MapPath("~/Images") + file.FileName);
+                }
                 var patient = new Patient()
                 {
                     ICNo = PatientViewModel.ICNo,
-                    Name = PatientViewModel.ICNo,
+                    Name = PatientViewModel.Name,
                     Gender = PatientViewModel.Gender,
                     Citizenship = PatientViewModel.Citizenship,
                     EmailAddr = PatientViewModel.EmailAddr,
                     Address = PatientViewModel.Address,
                     DoB = PatientViewModel.DoB,
+                    PatientImageURL = PatientViewModel.PatientImageURL
                 };
                 db.Patients.Add(patient);
                 db.SaveChanges();

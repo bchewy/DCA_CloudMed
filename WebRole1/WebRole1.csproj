@@ -249,6 +249,10 @@
     <Compile Include="Migrations\201901221139019_patientImage.Designer.cs">
       <DependentUpon>201901221139019_patientImage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901221214034_setg.cs" />
+    <Compile Include="Migrations\201901221214034_setg.Designer.cs">
+      <DependentUpon>201901221214034_setg.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Consultation.cs" />
@@ -427,6 +431,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901221139019_patientImage.resx">
       <DependentUpon>201901221139019_patientImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901221214034_setg.resx">
+      <DependentUpon>201901221214034_setg.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
