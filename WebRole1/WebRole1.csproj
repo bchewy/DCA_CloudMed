@@ -223,6 +223,7 @@
     <Compile Include="Controllers\DoctorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MedicalEquipmentsController.cs" />
     <Compile Include="Controllers\PatientsController.cs" />
     <Compile Include="DAL\CloudMedContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -334,6 +335,11 @@
     <Content Include="Views\Doctors\Details.cshtml" />
     <Content Include="Views\Doctors\Edit.cshtml" />
     <Content Include="Views\Doctors\Index.cshtml" />
+    <Content Include="Views\MedicalEquipments\Create.cshtml" />
+    <Content Include="Views\MedicalEquipments\Delete.cshtml" />
+    <Content Include="Views\MedicalEquipments\Details.cshtml" />
+    <Content Include="Views\MedicalEquipments\Edit.cshtml" />
+    <Content Include="Views\MedicalEquipments\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
