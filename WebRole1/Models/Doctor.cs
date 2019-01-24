@@ -17,6 +17,6 @@ namespace WebRole1.Models
         public string Specialty { get; set; }
 
         public virtual ICollection<Course> Courses { get; set; }
-        public virtual ICollection<Doctor> Doctors { get; set; }
+        public virtual ICollection<Consultation> Consultations { get; set; }
     }
 }

@@ -264,6 +264,10 @@
     <Compile Include="Migrations\201901240645062_fixEF.Designer.cs">
       <DependentUpon>201901240645062_fixEF.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901240713528_fixDOctor.cs" />
+    <Compile Include="Migrations\201901240713528_fixDOctor.Designer.cs">
+      <DependentUpon>201901240713528_fixDOctor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -465,6 +469,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901240645062_fixEF.resx">
       <DependentUpon>201901240645062_fixEF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901240713528_fixDOctor.resx">
+      <DependentUpon>201901240713528_fixDOctor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
