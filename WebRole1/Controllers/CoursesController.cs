@@ -11,113 +11,112 @@ using WebRole1.Models;
 
 namespace WebRole1.Controllers
 {
-    public class DoctorsController : Controller
+    public class CoursesController : Controller
     {
         private CloudMedContext db = new CloudMedContext();
 
-        // GET: Doctors
+        // GET: Courses
         public ActionResult Index()
         {
-            var doctors = db.Doctors.Include(d => d.Consultation);
-            return View(doctors.ToList());
+            var courses = db.Courses.Include(c => c.Doctor);
+            return View(courses.ToList());
         }
 
-        // GET: Doctors/Details/5
+        // GET: Courses/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Doctor doctor = db.Doctors.Find(id);
-            if (doctor == null)
+            Course course = db.Courses.Find(id);
+            if (course == null)
             {
                 return HttpNotFound();
             }
-            return View(doctor);
+            return View(course);
         }
 
-        // GET: Doctors/Create
+        // GET: Courses/Create
         public ActionResult Create()
         {
-            //fix this plz brian
-            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "ConsultationID");
+            ViewBag.DoctorID = new SelectList(db.Doctors, "DoctorID", "Specialty");
             return View();
         }
 
-        // POST: Doctors/Create
+        // POST: Courses/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DoctorID,ConsultationID,Specialty,PersonID,ICNo,Name,Citizenship,EmailAddr")] Doctor doctor)
+        public ActionResult Create([Bind(Include = "CourseID,Title,Description,Category,CourseFee,DoctorID")] Course course)
         {
             if (ModelState.IsValid)
             {
-                db.Doctors.Add(doctor);
+                db.Courses.Add(course);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "ConsultationID", doctor.ConsultationID);
-            return View(doctor);
+            ViewBag.DoctorID = new SelectList(db.Doctors, "DoctorID", "Specialty", course.DoctorID);
+            return View(course);
         }
 
-        // GET: Doctors/Edit/5
+        // GET: Courses/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Doctor doctor = db.Doctors.Find(id);
-            if (doctor == null)
+            Course course = db.Courses.Find(id);
+            if (course == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "ConsultationID", doctor.ConsultationID);
-            return View(doctor);
+            ViewBag.DoctorID = new SelectList(db.Doctors, "DoctorID", "Specialty", course.DoctorID);
+            return View(course);
         }
 
-        // POST: Doctors/Edit/5
+        // POST: Courses/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DoctorID,ConsultationID,Specialty,PersonID,ICNo,Name,Citizenship,EmailAddr")] Doctor doctor)
+        public ActionResult Edit([Bind(Include = "CourseID,Title,Description,Category,CourseFee,DoctorID")] Course course)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(doctor).State = EntityState.Modified;
+                db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "ConsultationID", doctor.ConsultationID);
-            return View(doctor);
+            ViewBag.DoctorID = new SelectList(db.Doctors, "DoctorID", "Specialty", course.DoctorID);
+            return View(course);
         }
 
-        // GET: Doctors/Delete/5
+        // GET: Courses/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Doctor doctor = db.Doctors.Find(id);
-            if (doctor == null)
+            Course course = db.Courses.Find(id);
+            if (course == null)
             {
                 return HttpNotFound();
             }
-            return View(doctor);
+            return View(course);
         }
 
-        // POST: Doctors/Delete/5
+        // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Doctor doctor = db.Doctors.Find(id);
-            db.Doctors.Remove(doctor);
+            Course course = db.Courses.Find(id);
+            db.Courses.Remove(course);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

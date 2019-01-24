@@ -220,7 +220,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ConsultationsController.cs" />
-    <Compile Include="Controllers\DoctorsController.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MedicalEquipmentsController.cs" />
@@ -252,6 +252,14 @@
     <Compile Include="Migrations\201901221214034_setg.cs" />
     <Compile Include="Migrations\201901221214034_setg.Designer.cs">
       <DependentUpon>201901221214034_setg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901240637071_doctoridinconsultation.cs" />
+    <Compile Include="Migrations\201901240637071_doctoridinconsultation.Designer.cs">
+      <DependentUpon>201901240637071_doctoridinconsultation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901240645062_fixEF.cs" />
+    <Compile Include="Migrations\201901240645062_fixEF.Designer.cs">
+      <DependentUpon>201901240645062_fixEF.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -389,16 +397,16 @@
     <Content Include="Views\Consultations\Details.cshtml" />
     <Content Include="Views\Consultations\Edit.cshtml" />
     <Content Include="Views\Consultations\Index.cshtml" />
-    <Content Include="Views\Doctors\Create.cshtml" />
-    <Content Include="Views\Doctors\Delete.cshtml" />
-    <Content Include="Views\Doctors\Details.cshtml" />
-    <Content Include="Views\Doctors\Edit.cshtml" />
-    <Content Include="Views\Doctors\Index.cshtml" />
     <Content Include="Views\MedicalEquipments\Create.cshtml" />
     <Content Include="Views\MedicalEquipments\Delete.cshtml" />
     <Content Include="Views\MedicalEquipments\Details.cshtml" />
     <Content Include="Views\MedicalEquipments\Edit.cshtml" />
     <Content Include="Views\MedicalEquipments\Index.cshtml" />
+    <Content Include="Views\Courses\Create.cshtml" />
+    <Content Include="Views\Courses\Delete.cshtml" />
+    <Content Include="Views\Courses\Details.cshtml" />
+    <Content Include="Views\Courses\Edit.cshtml" />
+    <Content Include="Views\Courses\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -434,6 +442,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901221214034_setg.resx">
       <DependentUpon>201901221214034_setg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901240637071_doctoridinconsultation.resx">
+      <DependentUpon>201901240637071_doctoridinconsultation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901240645062_fixEF.resx">
+      <DependentUpon>201901240645062_fixEF.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -27,12 +27,12 @@ namespace WebRole1.Models
         [ForeignKey("Patient")]
         public int PatientID { get; set; }
 
-        //ForeignKey("Doctor")]
-        //public int DoctorID { get; set; }
-
+        [ForeignKey("Doctor")]
+        public int DoctorID { get; set; }
+        
         public virtual Patient Patient { get; set; }
-        //public virtual Doctor Doctor { get; set; }
-        public virtual ICollection<Doctor> Doctors { get; set; }
+        public virtual Doctor Doctor { get; set; }
+        //public virtual ICollection<Doctor> Doctors { get; set; }
         public virtual ICollection<Diagnosis> Diagnoses { get; set; }
     }
 }
