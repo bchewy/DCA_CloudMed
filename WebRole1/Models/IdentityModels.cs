@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using WebRole1.DAL;
 
 namespace WebRole1.Models
 {
@@ -21,13 +22,20 @@ namespace WebRole1.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("IdentityContext", throwIfV1Schema: false)
         {
         }
 
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
+        }
+        static ApplicationDbContext()
+        {
+            // Set the database initializer to run once when application starts.
+            // This seeds the database with admin user credentials and admin role
+            Database.SetInitializer<ApplicationDbContext>
+            (new IdentityInitializer());
         }
     }
 }
