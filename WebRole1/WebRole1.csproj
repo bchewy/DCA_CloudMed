@@ -220,10 +220,12 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ConsultationsController.cs" />
+    <Compile Include="Controllers\DiagnosesController.cs" />
     <Compile Include="Controllers\DoctorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MedicalEquipmentsController.cs" />
+    <Compile Include="Controllers\MedicalRecordsController.cs" />
     <Compile Include="Controllers\PatientsController.cs" />
     <Compile Include="DAL\CloudMedContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -399,6 +401,16 @@
     <Content Include="Views\MedicalEquipments\Details.cshtml" />
     <Content Include="Views\MedicalEquipments\Edit.cshtml" />
     <Content Include="Views\MedicalEquipments\Index.cshtml" />
+    <Content Include="Views\MedicalRecords\Create.cshtml" />
+    <Content Include="Views\MedicalRecords\Delete.cshtml" />
+    <Content Include="Views\MedicalRecords\Details.cshtml" />
+    <Content Include="Views\MedicalRecords\Edit.cshtml" />
+    <Content Include="Views\MedicalRecords\Index.cshtml" />
+    <Content Include="Views\Diagnoses\Create.cshtml" />
+    <Content Include="Views\Diagnoses\Delete.cshtml" />
+    <Content Include="Views\Diagnoses\Details.cshtml" />
+    <Content Include="Views\Diagnoses\Edit.cshtml" />
+    <Content Include="Views\Diagnoses\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -29,5 +29,9 @@ namespace WebRole1.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<WebRole1.Models.MedicalRecord> MedicalRecords { get; set; }
+
+        public System.Data.Entity.DbSet<WebRole1.Models.Diagnosis> Diagnosis { get; set; }
     }
 }
