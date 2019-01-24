@@ -11,12 +11,12 @@ namespace WebRole1.Models
         
         public int DoctorID { get; set; }
 
-        [ForeignKey("Consultation")]
-        public int ConsultationID { get; set; }
+        //[ForeignKey("Consultation")]
+        //public int ConsultationID { get; set; }
 
         public string Specialty { get; set; }
 
-        public virtual Consultation Consultation { get; set; }
         public virtual ICollection<Course> Courses { get; set; }
+        public virtual ICollection<Doctor> Doctors { get; set; }
     }
 }
