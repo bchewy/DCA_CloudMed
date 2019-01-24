@@ -29,6 +29,9 @@ namespace WebRole1.Models
         [EmailAddress]
         public string EmailAddr { get; set; }
 
+        [Display(Name = "Image URL")]
+        public string PatientImageURL { get; set; }
+
         //Patient attributes
         [Required(ErrorMessage = "Address is required.")]
         public string Address { get; set; }

@@ -66,6 +66,13 @@
         <dd>
             @Html.DisplayFor(model => model.EmailAddr)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PatientImageURL)
+        </dt>
+
+        <dd>
+            <img src="@Html.Raw(Model.PatientImageURL)" />
+        </dd>
 
     </dl>
 

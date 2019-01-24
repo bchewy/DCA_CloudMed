@@ -220,12 +220,15 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ConsultationsController.cs" />
-    <Compile Include="Controllers\DoctorsController.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MedicalEquipmentsController.cs" />
     <Compile Include="Controllers\PatientsController.cs" />
+    <Compile Include="Controllers\RolesAdminController.cs" />
+    <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="DAL\CloudMedContext.cs" />
+    <Compile Include="DAL\IdentityInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -245,8 +248,29 @@
     <Compile Include="Migrations\201901221133539_someRequired.Designer.cs">
       <DependentUpon>201901221133539_someRequired.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901221139019_patientImage.cs" />
+    <Compile Include="Migrations\201901221139019_patientImage.Designer.cs">
+      <DependentUpon>201901221139019_patientImage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901221214034_setg.cs" />
+    <Compile Include="Migrations\201901221214034_setg.Designer.cs">
+      <DependentUpon>201901221214034_setg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901240637071_doctoridinconsultation.cs" />
+    <Compile Include="Migrations\201901240637071_doctoridinconsultation.Designer.cs">
+      <DependentUpon>201901240637071_doctoridinconsultation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901240645062_fixEF.cs" />
+    <Compile Include="Migrations\201901240645062_fixEF.Designer.cs">
+      <DependentUpon>201901240645062_fixEF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901240713528_fixDOctor.cs" />
+    <Compile Include="Migrations\201901240713528_fixDOctor.Designer.cs">
+      <DependentUpon>201901240713528_fixDOctor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\Consultation.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Diagnosis.cs" />
@@ -337,6 +361,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -381,16 +407,27 @@
     <Content Include="Views\Consultations\Details.cshtml" />
     <Content Include="Views\Consultations\Edit.cshtml" />
     <Content Include="Views\Consultations\Index.cshtml" />
-    <Content Include="Views\Doctors\Create.cshtml" />
-    <Content Include="Views\Doctors\Delete.cshtml" />
-    <Content Include="Views\Doctors\Details.cshtml" />
-    <Content Include="Views\Doctors\Edit.cshtml" />
-    <Content Include="Views\Doctors\Index.cshtml" />
     <Content Include="Views\MedicalEquipments\Create.cshtml" />
     <Content Include="Views\MedicalEquipments\Delete.cshtml" />
     <Content Include="Views\MedicalEquipments\Details.cshtml" />
     <Content Include="Views\MedicalEquipments\Edit.cshtml" />
     <Content Include="Views\MedicalEquipments\Index.cshtml" />
+    <Content Include="Views\UsersAdmin\Index.cshtml" />
+    <Content Include="Views\UsersAdmin\Edit.cshtml" />
+    <Content Include="Views\UsersAdmin\Details.cshtml" />
+    <Content Include="Views\UsersAdmin\Delete.cshtml" />
+    <Content Include="Views\UsersAdmin\Create.cshtml" />
+    <Content Include="Views\RolesAdmin\Index.cshtml" />
+    <Content Include="Views\RolesAdmin\Edit.cshtml" />
+    <Content Include="Views\RolesAdmin\Details.cshtml" />
+    <Content Include="Views\RolesAdmin\Delete.cshtml" />
+    <Content Include="Views\RolesAdmin\Create.cshtml" />
+    <Content Include="Views\Account\DisplayEmail.cshtml" />
+    <Content Include="Views\Courses\Create.cshtml" />
+    <Content Include="Views\Courses\Delete.cshtml" />
+    <Content Include="Views\Courses\Details.cshtml" />
+    <Content Include="Views\Courses\Edit.cshtml" />
+    <Content Include="Views\Courses\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -420,6 +457,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901221133539_someRequired.resx">
       <DependentUpon>201901221133539_someRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901221139019_patientImage.resx">
+      <DependentUpon>201901221139019_patientImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901221214034_setg.resx">
+      <DependentUpon>201901221214034_setg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901240637071_doctoridinconsultation.resx">
+      <DependentUpon>201901240637071_doctoridinconsultation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901240645062_fixEF.resx">
+      <DependentUpon>201901240645062_fixEF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901240713528_fixDOctor.resx">
+      <DependentUpon>201901240713528_fixDOctor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
