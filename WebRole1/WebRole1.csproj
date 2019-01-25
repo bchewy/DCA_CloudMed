@@ -221,7 +221,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ConsultationsController.cs" />
     <Compile Include="Controllers\DiagnosesController.cs" />
-    <Compile Include="Controllers\DoctorsController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
