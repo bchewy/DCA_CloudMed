@@ -277,6 +277,10 @@
     <Compile Include="Migrations\201901251053321_kw.Designer.cs">
       <DependentUpon>201901251053321_kw.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901251101301_added annotation on the medical equipments.cs" />
+    <Compile Include="Migrations\201901251101301_added annotation on the medical equipments.Designer.cs">
+      <DependentUpon>201901251101301_added annotation on the medical equipments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -491,6 +495,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901251053321_kw.resx">
       <DependentUpon>201901251053321_kw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901251101301_added annotation on the medical equipments.resx">
+      <DependentUpon>201901251101301_added annotation on the medical equipments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
