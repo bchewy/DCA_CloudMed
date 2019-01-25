@@ -11,9 +11,7 @@ namespace WebRole1.Models
     {
         [Key]
         public int RecordID { get; set; }
-
-
-
+        [Required]
         public string Description { get; set; }
         public string DocURL { get; set; }
 

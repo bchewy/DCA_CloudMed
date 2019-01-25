@@ -273,6 +273,10 @@
     <Compile Include="Migrations\201901251021514_removedDiagnosis.Designer.cs">
       <DependentUpon>201901251021514_removedDiagnosis.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901251053321_kw.cs" />
+    <Compile Include="Migrations\201901251053321_kw.Designer.cs">
+      <DependentUpon>201901251053321_kw.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -484,6 +488,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901251021514_removedDiagnosis.resx">
       <DependentUpon>201901251021514_removedDiagnosis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901251053321_kw.resx">
+      <DependentUpon>201901251053321_kw.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
