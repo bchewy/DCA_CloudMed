@@ -22,10 +22,7 @@ namespace WebRole1.Models
         public int Warranty { get; set; }
         public DateTime PurchaseDate { get; set; }
         public DateTime LastMaintenance { get; set; }
-
-        [ForeignKey("Diagnosis")]
-        public int DiagnosisID { get; set; }
-
-        public virtual Diagnosis Diagnosis { get; set; }
+        
+        public virtual ICollection<MedicalRecord> MedicalRecords { get; set; }
     }
 }

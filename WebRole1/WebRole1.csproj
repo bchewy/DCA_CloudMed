@@ -219,12 +219,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ConsultationsController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\DoctorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MedicalEquipmentsController.cs" />
+    <Compile Include="Controllers\MedicalRecordsController.cs" />
     <Compile Include="Controllers\PatientsController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
@@ -269,12 +269,15 @@
     <Compile Include="Migrations\201901240713528_fixDOctor.Designer.cs">
       <DependentUpon>201901240713528_fixDOctor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901251021514_removedDiagnosis.cs" />
+    <Compile Include="Migrations\201901251021514_removedDiagnosis.Designer.cs">
+      <DependentUpon>201901251021514_removedDiagnosis.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\Consultation.cs" />
     <Compile Include="Models\Course.cs" />
-    <Compile Include="Models\Diagnosis.cs" />
     <Compile Include="Models\Doctor.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -403,11 +406,6 @@
     <Content Include="Views\Patients\Details.cshtml" />
     <Content Include="Views\Patients\Edit.cshtml" />
     <Content Include="Views\Patients\Index.cshtml" />
-    <Content Include="Views\Consultations\Create.cshtml" />
-    <Content Include="Views\Consultations\Delete.cshtml" />
-    <Content Include="Views\Consultations\Details.cshtml" />
-    <Content Include="Views\Consultations\Edit.cshtml" />
-    <Content Include="Views\Consultations\Index.cshtml" />
     <Content Include="Views\MedicalEquipments\Create.cshtml" />
     <Content Include="Views\MedicalEquipments\Delete.cshtml" />
     <Content Include="Views\MedicalEquipments\Details.cshtml" />
@@ -434,6 +432,11 @@
     <Content Include="Views\Doctors\Details.cshtml" />
     <Content Include="Views\Doctors\Edit.cshtml" />
     <Content Include="Views\Doctors\Index.cshtml" />
+    <Content Include="Views\MedicalRecords\Create.cshtml" />
+    <Content Include="Views\MedicalRecords\Delete.cshtml" />
+    <Content Include="Views\MedicalRecords\Details.cshtml" />
+    <Content Include="Views\MedicalRecords\Edit.cshtml" />
+    <Content Include="Views\MedicalRecords\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -478,6 +481,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901240713528_fixDOctor.resx">
       <DependentUpon>201901240713528_fixDOctor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901251021514_removedDiagnosis.resx">
+      <DependentUpon>201901251021514_removedDiagnosis.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -11,115 +11,112 @@ using WebRole1.Models;
 
 namespace WebRole1.Controllers
 {
-    public class ConsultationsController : Controller
+    public class MedicalRecordsController : Controller
     {
         private CloudMedContext db = new CloudMedContext();
 
-        // GET: Consultations
+        // GET: MedicalRecords
         public ActionResult Index()
         {
-            var query = from d in db.Consultations orderby d.QueueNo ascending select d;
-            //var consult = db.Consultations.Include("PatientID").Include("DoctorID").OrderBy(o => o.QueueNo).First();
-            return View(query.ToList());
+            var medicalRecord = db.MedicalRecord.Include(m => m.Consultation);
+            return View(medicalRecord.ToList());
         }
 
-        // GET: Consultations/Details/5
+        // GET: MedicalRecords/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Consultation consultation = db.Consultations.Find(id);
-            if (consultation == null)
+            MedicalRecord medicalRecord = db.MedicalRecord.Find(id);
+            if (medicalRecord == null)
             {
                 return HttpNotFound();
             }
-            return View(consultation);
+            return View(medicalRecord);
         }
 
-        // GET: Consultations/Create
+        // GET: MedicalRecords/Create
         public ActionResult Create()
         {
-            ViewBag.PatientID = new SelectList(db.Patients, "PatientID", "Name");
-            ViewBag.DoctorID = new SelectList(db.Doctors, "DoctorID", "Name");
+            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "Status");
             return View();
         }
 
-        // POST: Consultations/Create
+        // POST: MedicalRecords/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ConsultationID,QueueNo,TimeStamp,Status,ConsultationType,DoctorID,PatientID")] Consultation consultation)
+        public ActionResult Create([Bind(Include = "RecordID,Description,DocURL,Illness,ConsultationID")] MedicalRecord medicalRecord)
         {
             if (ModelState.IsValid)
             {
-                db.Consultations.Add(consultation);
+                db.MedicalRecord.Add(medicalRecord);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PatientID = new SelectList(db.Patients, "PatientID", "Name", consultation.PatientID);
-            return View(consultation);
+            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "Status", medicalRecord.ConsultationID);
+            return View(medicalRecord);
         }
 
-        // GET: Consultations/Edit/5
+        // GET: MedicalRecords/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Consultation consultation = db.Consultations.Find(id);
-            if (consultation == null)
+            MedicalRecord medicalRecord = db.MedicalRecord.Find(id);
+            if (medicalRecord == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.PatientID = new SelectList(db.Patients, "PatientID", "Name", consultation.PatientID);
-            return View(consultation);
+            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "Status", medicalRecord.ConsultationID);
+            return View(medicalRecord);
         }
 
-        // POST: Consultations/Edit/5
+        // POST: MedicalRecords/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ConsultationID,QueueNo,TimeStamp,Status,ConsultationType,DoctorID,PatientID")] Consultation consultation)
+        public ActionResult Edit([Bind(Include = "RecordID,Description,DocURL,Illness,ConsultationID")] MedicalRecord medicalRecord)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(consultation).State = EntityState.Modified;
+                db.Entry(medicalRecord).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.PatientID = new SelectList(db.Patients, "PatientID", "Name", consultation.PatientID);
-            ViewBag.PatientID = new SelectList(db.Patients, "DoctorID", "Name", consultation.DoctorID);
-            return View(consultation);
+            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "Status", medicalRecord.ConsultationID);
+            return View(medicalRecord);
         }
 
-        // GET: Consultations/Delete/5
+        // GET: MedicalRecords/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Consultation consultation = db.Consultations.Find(id);
-            if (consultation == null)
+            MedicalRecord medicalRecord = db.MedicalRecord.Find(id);
+            if (medicalRecord == null)
             {
                 return HttpNotFound();
             }
-            return View(consultation);
+            return View(medicalRecord);
         }
 
-        // POST: Consultations/Delete/5
+        // POST: MedicalRecords/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Consultation consultation = db.Consultations.Find(id);
-            db.Consultations.Remove(consultation);
+            MedicalRecord medicalRecord = db.MedicalRecord.Find(id);
+            db.MedicalRecord.Remove(medicalRecord);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

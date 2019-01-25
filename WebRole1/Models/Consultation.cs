@@ -33,6 +33,6 @@ namespace WebRole1.Models
         public virtual Patient Patient { get; set; }
         public virtual Doctor Doctor { get; set; }
         //public virtual ICollection<Doctor> Doctors { get; set; }
-        public virtual ICollection<Diagnosis> Diagnoses { get; set; }
+        public virtual ICollection<MedicalRecord> MedicalRecords { get; set; }
     }
 }

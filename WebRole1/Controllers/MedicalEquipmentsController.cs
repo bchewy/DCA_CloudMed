@@ -18,8 +18,7 @@ namespace WebRole1.Controllers
         // GET: MedicalEquipments
         public ActionResult Index()
         {
-            var medicalEquipment = db.MedicalEquipment.Include(m => m.Diagnosis);
-            return View(medicalEquipment.ToList());
+            return View(db.MedicalEquipment.ToList());
         }
 
         // GET: MedicalEquipments/Details/5
@@ -40,7 +39,6 @@ namespace WebRole1.Controllers
         // GET: MedicalEquipments/Create
         public ActionResult Create()
         {
-            ViewBag.DiagnosisID = new SelectList(db.Diagnoses, "DiagnosisID", "Illness");
             return View();
         }
 
@@ -49,7 +47,7 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EquipmentID,Name,Brand,SerialNumber,Status,SoftwareVersion,Warranty,PurchaseDate,LastMaintenance,DiagnosisID")] MedicalEquipment medicalEquipment)
+        public ActionResult Create([Bind(Include = "EquipmentID,Name,Brand,SerialNumber,Status,SoftwareVersion,Warranty,PurchaseDate,LastMaintenance")] MedicalEquipment medicalEquipment)
         {
             if (ModelState.IsValid)
             {
@@ -58,7 +56,6 @@ namespace WebRole1.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.DiagnosisID = new SelectList(db.Diagnoses, "DiagnosisID", "Illness", medicalEquipment.DiagnosisID);
             return View(medicalEquipment);
         }
 
@@ -74,7 +71,6 @@ namespace WebRole1.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.DiagnosisID = new SelectList(db.Diagnoses, "DiagnosisID", "Illness", medicalEquipment.DiagnosisID);
             return View(medicalEquipment);
         }
 
@@ -83,7 +79,7 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EquipmentID,Name,Brand,SerialNumber,Status,SoftwareVersion,Warranty,PurchaseDate,LastMaintenance,DiagnosisID")] MedicalEquipment medicalEquipment)
+        public ActionResult Edit([Bind(Include = "EquipmentID,Name,Brand,SerialNumber,Status,SoftwareVersion,Warranty,PurchaseDate,LastMaintenance")] MedicalEquipment medicalEquipment)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +87,6 @@ namespace WebRole1.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.DiagnosisID = new SelectList(db.Diagnoses, "DiagnosisID", "Illness", medicalEquipment.DiagnosisID);
             return View(medicalEquipment);
         }
 

@@ -1,0 +1,50 @@
+﻿@model WebRole1.Models.MedicalRecord
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MedicalRecord</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Consultation.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Consultation.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DocURL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DocURL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Illness)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Illness)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RecordID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -17,9 +17,13 @@ namespace WebRole1.Models
         public string Description { get; set; }
         public string DocURL { get; set; }
 
-        [ForeignKey("Diagnosis")]
-        public int DiagnosisID { get; set; }
+        public string Illness { get; set; }
 
-        public virtual Diagnosis Diagnosis { get; set; }
+        [ForeignKey("Consultation")]
+        public int ConsultationID { get; set; }
+
+        public virtual Consultation Consultation { get; set; }
+
+        public virtual ICollection<MedicalEquipment> MedicalEquipments { get; set; }
     }
 }

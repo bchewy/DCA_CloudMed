@@ -13,7 +13,6 @@ namespace WebRole1.DAL
 
         public DbSet<Consultation> Consultations { get; set; }
         public DbSet<Course> Courses { get; set; }
-        public DbSet<Diagnosis> Diagnoses { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<MedicalEquipment> MedicalEquipment { get; set; }
         public DbSet<MedicalRecord> MedicalRecord { get; set; }
