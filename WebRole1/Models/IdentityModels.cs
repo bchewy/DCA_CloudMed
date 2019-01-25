@@ -30,6 +30,10 @@ namespace WebRole1.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<WebRole1.Models.MedicalRecord> MedicalRecords { get; set; }
+
+        public System.Data.Entity.DbSet<WebRole1.Models.Diagnosis> Diagnosis { get; set; }
         static ApplicationDbContext()
         {
             // Set the database initializer to run once when application starts.
