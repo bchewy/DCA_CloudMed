@@ -40,7 +40,7 @@ namespace WebRole1.Controllers
         // GET: MedicalRecords/Create
         public ActionResult Create()
         {
-            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "Status");
+            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "ConsultationID");
             return View();
         }
 
@@ -58,7 +58,7 @@ namespace WebRole1.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "Status", medicalRecord.ConsultationID);
+            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "ConsultationID", medicalRecord.ConsultationID);
             return View(medicalRecord);
         }
 
@@ -74,7 +74,7 @@ namespace WebRole1.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "Status", medicalRecord.ConsultationID);
+            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "ConsultationID", medicalRecord.ConsultationID);
             return View(medicalRecord);
         }
 
@@ -91,7 +91,7 @@ namespace WebRole1.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "Status", medicalRecord.ConsultationID);
+            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "ConsultationID", medicalRecord.ConsultationID);
             return View(medicalRecord);
         }
 
