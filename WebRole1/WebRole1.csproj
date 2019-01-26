@@ -291,6 +291,34 @@
     <Compile Include="Migrations\201901260807011_updated on medical equipment .Designer.cs">
       <DependentUpon>201901260807011_updated on medical equipment .cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901261202374_redo on medical equipment vm.cs" />
+    <Compile Include="Migrations\201901261202374_redo on medical equipment vm.Designer.cs">
+      <DependentUpon>201901261202374_redo on medical equipment vm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901261229498_still testing on me vm.cs" />
+    <Compile Include="Migrations\201901261229498_still testing on me vm.Designer.cs">
+      <DependentUpon>201901261229498_still testing on me vm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901261236447_still doing some adjusing on medicalequipment vm.cs" />
+    <Compile Include="Migrations\201901261236447_still doing some adjusing on medicalequipment vm.Designer.cs">
+      <DependentUpon>201901261236447_still doing some adjusing on medicalequipment vm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901261300294_still fixing problem for medicaldevice vm.cs" />
+    <Compile Include="Migrations\201901261300294_still fixing problem for medicaldevice vm.Designer.cs">
+      <DependentUpon>201901261300294_still fixing problem for medicaldevice vm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901261517120_still working on medicalequipment.cs" />
+    <Compile Include="Migrations\201901261517120_still working on medicalequipment.Designer.cs">
+      <DependentUpon>201901261517120_still working on medicalequipment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901261556551_still fixing thie medical device vm.cs" />
+    <Compile Include="Migrations\201901261556551_still fixing thie medical device vm.Designer.cs">
+      <DependentUpon>201901261556551_still fixing thie medical device vm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901261609406_stilladjustingonMedicalEquipmentvm.cs" />
+    <Compile Include="Migrations\201901261609406_stilladjustingonMedicalEquipmentvm.Designer.cs">
+      <DependentUpon>201901261609406_stilladjustingonMedicalEquipmentvm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -484,9 +512,6 @@
     <Content Include="Views\MedicalRecords\Details.cshtml" />
     <Content Include="Views\MedicalRecords\Edit.cshtml" />
     <Content Include="Views\MedicalRecords\Index.cshtml" />
-    <Content Include="Views\MedicalEquipments\Create.cshtml" />
-    <Content Include="Views\MedicalEquipments\Edit.cshtml" />
-    <Content Include="Views\MedicalEquipments\Details.cshtml" />
     <Content Include="Views\MedicalEquipments\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
@@ -497,6 +522,9 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\MedicalEquipments\Create.cshtml" />
+    <Content Include="Views\MedicalEquipments\Details.cshtml" />
+    <Content Include="Views\MedicalEquipments\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -548,6 +576,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901260807011_updated on medical equipment .resx">
       <DependentUpon>201901260807011_updated on medical equipment .cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901261202374_redo on medical equipment vm.resx">
+      <DependentUpon>201901261202374_redo on medical equipment vm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901261229498_still testing on me vm.resx">
+      <DependentUpon>201901261229498_still testing on me vm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901261236447_still doing some adjusing on medicalequipment vm.resx">
+      <DependentUpon>201901261236447_still doing some adjusing on medicalequipment vm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901261300294_still fixing problem for medicaldevice vm.resx">
+      <DependentUpon>201901261300294_still fixing problem for medicaldevice vm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901261517120_still working on medicalequipment.resx">
+      <DependentUpon>201901261517120_still working on medicalequipment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901261556551_still fixing thie medical device vm.resx">
+      <DependentUpon>201901261556551_still fixing thie medical device vm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901261609406_stilladjustingonMedicalEquipmentvm.resx">
+      <DependentUpon>201901261609406_stilladjustingonMedicalEquipmentvm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
