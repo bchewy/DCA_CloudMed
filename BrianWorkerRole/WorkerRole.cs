@@ -28,7 +28,7 @@ namespace BrianWorkerRole
     public class WorkerRole : RoleEntryPoint
     {
         //Initalise patientQueue and BlobContainer
-        private CloudQueue patientsQueue;
+        private CloudQueue patientQueue;
         private CloudBlobContainer imagesBlobContainer;
         //CloudMedContext
         private CloudMedContext db = new CloudMedContext();
@@ -37,23 +37,119 @@ namespace BrianWorkerRole
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent runCompleteEvent = new ManualResetEvent(false);
 
-        public override void Run()
-        {
-            Trace.TraceInformation("BrianWorkerRole is running");
+        //Workerclass methods
 
+        // ProcessImage
+        private void ProcessPatientQueueMsg(CloudQueueMessage msg)
+        {
+
+            var PatientIC = int.Parse(msg.AsString);
+            Patient pat = db.Patients.Find(PatientIC);
+
+            if (pat == null)
+            {
+                this.patientQueue.DeleteMessage(msg); throw new Exception(String.Format(
+                "VehicleID {0} not found, can't create thumbnail", PatientIC.ToString()));
+            }
+            Uri blobUri = new Uri(pat.PatientImageURL);
+            string blobName =
+            blobUri.Segments[blobUri.Segments.Length - 1];
+            CloudBlockBlob inputBlob = this.imagesBlobContainer.GetBlockBlobReference(blobName);
+
+            string thumbnailName = Path.GetFileNameWithoutExtension(inputBlob.Name) + "thumb.jpg";
+            CloudBlockBlob outputBlob = this.imagesBlobContainer.GetBlockBlobReference(thumbnailName);
+
+            using (Stream input = inputBlob.OpenRead())
+            using (Stream output = outputBlob.OpenWrite())
+            {
+                ConvertImageToThumbnailJPG(input, output);
+                outputBlob.Properties.ContentType = "image/jpeg";
+            }
+            pat.PatientThumbNailURl = outputBlob.Uri.ToString();
+            db.Entry(pat).State = EntityState.Modified;
+            db.SaveChanges();
+
+            this.patientQueue.DeleteMessage(msg);
+        }
+        //Process Image to thumbnail
+        public void ConvertImageToThumbnailJPG(Stream input, Stream output)
+        {
+            int thumbnailsize = 240, width, height;
+            var originalImage = new Bitmap(input);
+
+            if (originalImage.Width > originalImage.Height)
+            {
+                width = thumbnailsize;
+                height = thumbnailsize *
+                originalImage.Height / originalImage.Width;
+            }
+            else
+            {
+                height = thumbnailsize;
+                width = thumbnailsize *
+                originalImage.Width / originalImage.Height;
+            }
+            Bitmap thumbnailImage = null;
             try
             {
-                this.RunAsync(this.cancellationTokenSource.Token).Wait();
+                thumbnailImage = new Bitmap(width, height);
+                using (Graphics graphics = Graphics.FromImage(thumbnailImage))
+                {
+                    graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                    graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    graphics.DrawImage(originalImage, 0, 0, width, height);
+                }
+                thumbnailImage.Save(output, ImageFormat.Jpeg);
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError("Error in creating thumbnail image "
+                + e.ToString());
             }
             finally
             {
-                this.runCompleteEvent.Set();
+                if (thumbnailImage != null)
+                    thumbnailImage.Dispose();
+            }
+
+        }
+
+
+        public override void Run()
+        {
+            Trace.TraceInformation("BrianWorkerRole is running");
+            CloudQueueMessage patientMsg = null;
+            while (true)
+            {
+                try
+                {
+                    patientMsg = this.patientQueue.GetMessage();
+                    if (patientMsg != null)
+                    {
+                        Debug.WriteLine("PatientIC from Queue:" + patientMsg.AsString);
+                        ProcessPatientQueueMsg(patientMsg);
+                    }
+                    if (patientMsg == null)
+                    {
+                        System.Threading.Thread.Sleep(10000); //Sleeps for 10 seconds
+                    }
+                }
+                catch(StorageException se)
+                {
+                    if(patientMsg!=null && patientMsg.DequeueCount > 5)
+                    {
+                        this.patientQueue.DeleteMessage(patientMsg);
+                        Trace.TraceError("Deleting poison queue item " + "from patientQueue: {0}", patientMsg.AsString);
+                    }
+                    Trace.TraceError("Exception in BrianWorkerRole: '{0}'", se.Message);
+                    System.Threading.Thread.Sleep(10000);
+                }
             }
         }
 
         public override bool OnStart()
         {
-            // Set the maximum number of concurrent connections
             ServicePointManager.DefaultConnectionLimit = 12;
 
             //read db string and open db
@@ -63,22 +159,16 @@ namespace BrianWorkerRole
             //open storage from cscfg
             var storageAccount = CloudStorageAccount.Parse(RoleEnvironment.GetConfigurationSettingValue("StorageConnectionString"));
 
-            //Patients queue
             Trace.TraceInformation("Create patient queue container");
             CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
 
-            patientsQueue = queueClient.GetQueueReference("patients"); //Not used at the moment, since only img->tnail is used
-            patientsQueue.CreateIfNotExists();
-
-
-            //Patient Images
+            //Patient Images blob
             Trace.TraceInformation("Create images blob container");
             var blobClient = storageAccount.CreateCloudBlobClient();
-            imagesBlobContainer = blobClient.GetContainerReference("images");
+            imagesBlobContainer = blobClient.GetContainerReference("patientimages");
 
             if (imagesBlobContainer.CreateIfNotExists())
             {
-                //	Enable public access on the images blob container. 
                 imagesBlobContainer.SetPermissions(
                 new BlobContainerPermissions
                 {
@@ -86,14 +176,14 @@ namespace BrianWorkerRole
                 });
 
             }
-
-
             Trace.TraceInformation("Create images queue container");
-            patientsQueue = queueClient.GetQueueReference("images");
-            patientsQueue.CreateIfNotExists();
+            patientQueue = queueClient.GetQueueReference("images");
+            patientQueue.CreateIfNotExists();
 
             Trace.TraceInformation("Storage initialized");
             //End of storage initalisation.
+
+
             bool result = base.OnStart();
 
             Trace.TraceInformation("BrianWorkerRole has been started");
