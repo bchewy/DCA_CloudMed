@@ -287,6 +287,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MedicalEquipment.cs" />
     <Compile Include="Models\MedicalRecord.cs" />
+    <Compile Include="Models\MedicalRecordsViewModel.cs" />
     <Compile Include="Models\Patient.cs" />
     <Compile Include="Models\PatientViewModel.cs" />
     <Compile Include="Models\Person.cs" />
@@ -436,11 +437,11 @@
     <Content Include="Views\Doctors\Details.cshtml" />
     <Content Include="Views\Doctors\Edit.cshtml" />
     <Content Include="Views\Doctors\Index.cshtml" />
-    <Content Include="Views\MedicalRecords\Create.cshtml" />
     <Content Include="Views\MedicalRecords\Delete.cshtml" />
-    <Content Include="Views\MedicalRecords\Details.cshtml" />
-    <Content Include="Views\MedicalRecords\Edit.cshtml" />
     <Content Include="Views\MedicalRecords\Index.cshtml" />
+    <Content Include="Views\MedicalRecords\Create.cshtml" />
+    <Content Include="Views\MedicalRecords\Edit.cshtml" />
+    <Content Include="Views\MedicalRecords\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
