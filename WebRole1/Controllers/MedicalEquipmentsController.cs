@@ -41,7 +41,12 @@ namespace WebRole1.Controllers
                 Brand = medicalEquipment.Brand,
                 SerialNumber = medicalEquipment.SerialNumber,
                 Status = medicalEquipment.Status,
-                SoftwareVersion = medicalEquipment.SoftwareVersion
+
+                SoftwareVersion = medicalEquipment.SoftwareVersion,
+                /*PurchaseDate = medicalEquipment.PurchaseDate,
+                Warranty = medicalEquipment.Warranty,
+                LastMaintenance = medicalEquipment.LastMaintenance
+                */
             };
             return View(MedicalEquipmentViewModel);
         }
@@ -68,13 +73,20 @@ namespace WebRole1.Controllers
                     Brand = medicalEquipmentViewModel.Brand,
                     SerialNumber = medicalEquipmentViewModel.SerialNumber,
                     Status = medicalEquipmentViewModel.Status,
-                    SoftwareVersion = medicalEquipmentViewModel.SoftwareVersion
+                    SoftwareVersion = medicalEquipmentViewModel.SoftwareVersion,
+                    /*
+                    Warranty = medicalEquipmentViewModel.Warranty,
+                    PurchaseDate = medicalEquipmentViewModel.PurchaseDate,
+                    LastMaintenance = medicalEquipmentViewModel.LastMaintenance
+                */
 
                 };
+
                 db.MedicalEquipment.Add(medicalequipment);
                 db.SaveChanges();
-               
+
                 int newMedEquip = medicalequipment.EquipmentID;
+       
                 return RedirectToAction("Index");
 
 
@@ -99,10 +111,16 @@ namespace WebRole1.Controllers
             MedicalEquipmentViewModel MedicalEquimentViewModel = new MedicalEquipmentViewModel()
             {
                 EquipmentID = medicalEquipment.EquipmentID,
+                Name=medicalEquipment.Name,
                 Brand = medicalEquipment.Brand,
                 SerialNumber = medicalEquipment.SerialNumber,
                 Status = medicalEquipment.Status,
-                SoftwareVersion = medicalEquipment.SoftwareVersion
+                SoftwareVersion = medicalEquipment.SoftwareVersion,
+                /*
+                Warranty =medicalEquipment.Warranty,
+                PurchaseDate = medicalEquipment.PurchaseDate,
+                LastMaintenance = medicalEquipment.LastMaintenance
+                */
             };
 
             return View(MedicalEquimentViewModel);
@@ -115,15 +133,27 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EquipmentID,Name,Brand,SerialNumber,Status,SoftwareVersion")] MedicalEquipment medicalEquipment)
+        public ActionResult Edit([Bind(Include = "EquipmentID,Name,Brand,SerialNumber,Status,SoftwareVersion")] MedicalEquipmentViewModel MedicalEquipmentViewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(medicalEquipment).State = EntityState.Modified;
+                var medicalequipment = db.MedicalEquipment.Find(MedicalEquipmentViewModel.EquipmentID);
+
+                medicalequipment.Name = MedicalEquipmentViewModel.Name;
+                medicalequipment.Brand = MedicalEquipmentViewModel.Brand;
+                medicalequipment.SerialNumber = MedicalEquipmentViewModel.SerialNumber;
+                medicalequipment.Status = MedicalEquipmentViewModel.Status;
+                medicalequipment.SoftwareVersion = MedicalEquipmentViewModel.SoftwareVersion;
+                /*
+                medicalequipment.Warranty = MedicalEquipmentViewModel.Warranty;
+                medicalequipment.PurchaseDate = MedicalEquipmentViewModel.PurchaseDate;
+                medicalequipment.LastMaintenance = MedicalEquipmentViewModel.LastMaintenance;
+                */
+                
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(medicalEquipment);
+            return View(MedicalEquipmentViewModel);
         }
 
         // GET: MedicalEquipments/Delete/5
@@ -147,8 +177,9 @@ namespace WebRole1.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             MedicalEquipment medicalEquipment = db.MedicalEquipment.Find(id);
+
             MedicalEquipment medicalEquipments = db.MedicalEquipment.Remove(medicalEquipment);// THIS MIGHT HAVE ERROR THE CODE PROBABLY IS WRONG
-            db.MedicalEquipment.Remove(medicalEquipment);
+           // db.MedicalEquipment.Remove(medicalEquipment);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
