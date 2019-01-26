@@ -90,11 +90,15 @@ namespace WebRole1.Controllers
 
 
         // GET: Patients
-        public ActionResult Index(string so)
+        public ViewResult Index(string so,string searchString)//so sortOrder 
         {
             ViewBag.NameSortParam = String.IsNullOrEmpty(so) ? "Name" : "";
             ViewBag.DateSortParam = so == "DOB" ? "DOB" : "DOB";
             var patients = from p in db.Patients select p;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                patients = patients.Where(p => p.Name.Contains(searchString) || p.ICNo.Contains(searchString));
+            }
             switch (so)
             {
                 case "Name":

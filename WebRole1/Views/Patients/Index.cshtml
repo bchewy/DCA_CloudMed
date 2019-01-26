@@ -13,9 +13,22 @@
 <div class="container">
     <h2 class="text-center mt-2">Patients</h2>
     <p class="text-center">PSA: Thumbnails that are missing may have yet to be processed. Images are processed every 10 seconds.</p>
-    <div class="text-center my-2">
-        @Html.ActionLink("Create New", "Create",null,new { @class = "btn btn-secondary" })
+
+    <div>
+        @using (Html.BeginForm())
+        {
+            <div class="row">
+                <div class="col-md-10">
+                    @Html.TextBox("searchString", null, new { @class = "form-control", @placeholder = "Search by Name/IC" })
+                </div>
+                <div class="col-md-2">
+                    <input class="btn btn-block btn-info" type="submit" value="Search" />
+                </div>
+            </div>
+        }
     </div>
+
+
     <table class="table">
         <tr>
             <th>Photo</th>
@@ -79,6 +92,7 @@
                 </td> -->
 
                 <td>
+
                     @Html.ActionLink("Edit", "Edit", new { id = item.PatientID }) |
                     @Html.ActionLink("Details", "Details", new { id = item.PatientID }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.PatientID })
@@ -87,4 +101,7 @@
         }
 
     </table>
+    <div class="text-center my-2">
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-secondary" })
+    </div>
 </div>
