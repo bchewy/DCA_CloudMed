@@ -22,10 +22,18 @@ using Microsoft.WindowsAzure.Storage.Queue;
 using System.Net.Mail;
 
 
+
 namespace BrianWorkerRole
 {
     public class WorkerRole : RoleEntryPoint
     {
+        //Initalise patientQueue and BlobContainer
+        private CloudQueue patientsQueue;
+        private CloudBlobContainer imagesBlobContainer;
+        //CloudMedContext
+        private CloudMedContext db = new CloudMedContext();
+
+        //Others
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent runCompleteEvent = new ManualResetEvent(false);
 
@@ -48,9 +56,44 @@ namespace BrianWorkerRole
             // Set the maximum number of concurrent connections
             ServicePointManager.DefaultConnectionLimit = 12;
 
-            // For information on handling configuration changes
-            // see the MSDN topic at https://go.microsoft.com/fwlink/?LinkId=166357.
+            //read db string and open db
+            var dbConnString = CloudConfigurationManager.GetSetting("CloudMedDbConnectionString");
+            db = new CloudMedContext(dbConnString);
 
+            //open storage from cscfg
+            var storageAccount = CloudStorageAccount.Parse(RoleEnvironment.GetConfigurationSettingValue("StorageConnectionString"));
+
+            //Patients queue
+            Trace.TraceInformation("Create patient queue container");
+            CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+
+            patientsQueue = queueClient.GetQueueReference("patients"); //Not used at the moment, since only img->tnail is used
+            patientsQueue.CreateIfNotExists();
+
+
+            //Patient Images
+            Trace.TraceInformation("Create images blob container");
+            var blobClient = storageAccount.CreateCloudBlobClient();
+            imagesBlobContainer = blobClient.GetContainerReference("images");
+
+            if (imagesBlobContainer.CreateIfNotExists())
+            {
+                //	Enable public access on the images blob container. 
+                imagesBlobContainer.SetPermissions(
+                new BlobContainerPermissions
+                {
+                    PublicAccess = BlobContainerPublicAccessType.Blob
+                });
+
+            }
+
+
+            Trace.TraceInformation("Create images queue container");
+            patientsQueue = queueClient.GetQueueReference("images");
+            patientsQueue.CreateIfNotExists();
+
+            Trace.TraceInformation("Storage initialized");
+            //End of storage initalisation.
             bool result = base.OnStart();
 
             Trace.TraceInformation("BrianWorkerRole has been started");
