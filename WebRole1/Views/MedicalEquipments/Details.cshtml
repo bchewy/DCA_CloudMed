@@ -1,4 +1,4 @@
-﻿@model WebRole1.Models.MedicalEquipment
+﻿@model WebRole1.Models.MedicalEquipmentViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>MedicalEquipment</h4>
+    <h4>MedicalEquipmentViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -48,30 +48,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.SoftwareVersion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Warranty)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Warranty)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PurchaseDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PurchaseDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastMaintenance)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastMaintenance)
         </dd>
 
     </dl>
