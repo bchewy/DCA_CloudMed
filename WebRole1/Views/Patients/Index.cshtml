@@ -4,78 +4,87 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
 <style>
-    table.table tbody tr td > a{
-        color:black;
+    table.table tbody tr td > a {
+        color: black;
     }
 </style>
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.ActionLink("Date of Birth", "Index", new { so = ViewBag.DateSortParam })
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PersonID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ICNo)
-        </th>
-        <th>
-            @Html.ActionLink("Name","Index",new { so = ViewBag.NameSortParam})
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Citizenship)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmailAddr)
-        </th>
-        <th>Patient Image</th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DoB)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PersonID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ICNo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Citizenship)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmailAddr)
-        </td>
-        <!--
-        <td>
-            <img src="@*Html.Raw(item.PatientImageURL)*@" />
-        </td> -->
-        <td>
-            <img src="@Html.Raw(item.PatientThumbNailURl)" width="80", height="60" />
-        </td>
-        <td>f
-            @Html.ActionLink("Edit", "Edit", new { id=item.PatientID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PatientID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PatientID })
-        </td>
-    </tr>
-}
+<div class="container">
+    <h2 class="text-center mt-2">Patients</h2>
+    <p class="text-center">PSA: Thumbnails that are missing may have yet to be processed. Images are processed every 10 seconds.</p>
+    <div class="text-center my-2">
+        @Html.ActionLink("Create New", "Create",null,new { @class = "btn btn-secondary" })
+    </div>
+    <table class="table">
+        <tr>
+            <th>Photo</th>
+            <th>
+                @Html.ActionLink("Name", "Index", new { so = ViewBag.NameSortParam })
 
-</table>
+            </th>
+            <th>
+                @Html.ActionLink("Date of Birth", "Index", new { so = ViewBag.DateSortParam })
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PersonID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ICNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Citizenship)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailAddr)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@Html.Raw(item.PatientThumbNailURl)" width="80" , height="60" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DoB)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PersonID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ICNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Citizenship)
+                </td>
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.EmailAddr)
+                </td>
+                <!--
+                <td>
+                    <img src="@*Html.Raw(item.PatientImageURL)*@" />
+                </td> -->
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.PatientID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.PatientID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.PatientID })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
