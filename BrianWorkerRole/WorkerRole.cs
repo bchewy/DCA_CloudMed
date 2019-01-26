@@ -29,7 +29,13 @@ namespace BrianWorkerRole
     {
         //Initalise patientQueue and BlobContainer
         private CloudQueue patientQueue;
-        private CloudBlobContainer imagesBlobContainer;
+        private CloudQueue doctorQueue;
+        private CloudBlobContainer imagesBlobContainer;//Patient
+        private CloudBlobContainer imagesBl0bContainer;//Doctor
+
+        //Doctor uses queueClient2
+        //Patient uses queueClient
+
         //CloudMedContext
         private CloudMedContext db = new CloudMedContext();
 
@@ -39,7 +45,7 @@ namespace BrianWorkerRole
 
         //Workerclass methods
 
-        // ProcessImage
+        // ProcessPatientQueue message Image
         private void ProcessPatientQueueMsg(CloudQueueMessage msg)
         {
 
@@ -49,7 +55,7 @@ namespace BrianWorkerRole
             if (pat == null)
             {
                 this.patientQueue.DeleteMessage(msg); throw new Exception(String.Format(
-                "VehicleID {0} not found, can't create thumbnail", PatientIC.ToString()));
+                "PatientID of {0} not found, can't create thumbnail", PatientIC.ToString()));
             }
             Uri blobUri = new Uri(pat.PatientImageURL);
             string blobName =
@@ -71,6 +77,40 @@ namespace BrianWorkerRole
 
             this.patientQueue.DeleteMessage(msg);
         }
+
+        // ProcessDocQueue message Image
+        private void ProcessDocQueueMsg(CloudQueueMessage msg)
+        {
+
+            var PatientIC = int.Parse(msg.AsString);
+            Doctor pat = db.Doctors.Find(PatientIC);
+
+            if (pat == null)
+            {
+                this.patientQueue.DeleteMessage(msg); throw new Exception(String.Format(
+                "PatientID of {0} not found, can't create thumbnail", PatientIC.ToString()));
+            }
+            Uri blobUri = new Uri(pat.DoctorImageURL);
+            string blobName =
+            blobUri.Segments[blobUri.Segments.Length - 1];
+            CloudBlockBlob inputBlob = this.imagesBl0bContainer.GetBlockBlobReference(blobName);
+
+            string thumbnailName = Path.GetFileNameWithoutExtension(inputBlob.Name) + "thumb.jpg";
+            CloudBlockBlob outputBlob = this.imagesBl0bContainer.GetBlockBlobReference(thumbnailName);
+
+            using (Stream input = inputBlob.OpenRead())
+            using (Stream output = outputBlob.OpenWrite())
+            {
+                ConvertImageToThumbnailJPG(input, output);
+                outputBlob.Properties.ContentType = "image/jpeg";
+            }
+            pat.DoctorThumbnailImageURL = outputBlob.Uri.ToString();
+            db.Entry(pat).State = EntityState.Modified;
+            db.SaveChanges();
+
+            this.patientQueue.DeleteMessage(msg);
+        }
+
         //Process Image to thumbnail
         public void ConvertImageToThumbnailJPG(Stream input, Stream output)
         {
@@ -120,23 +160,35 @@ namespace BrianWorkerRole
         {
             Trace.TraceInformation("BrianWorkerRole is running");
             CloudQueueMessage patientMsg = null;
+            CloudQueueMessage doctorMsg = null;
             while (true)
             {
                 try
                 {
+                    doctorMsg = this.doctorQueue.GetMessage();
                     patientMsg = this.patientQueue.GetMessage();
+                    if(doctorMsg!= null)
+                    {
+                        Debug.WriteLine("DoctorID from Queue:" + doctorMsg.AsString);
+                        ProcessDocQueueMsg(doctorMsg);
+                    }
                     if (patientMsg != null)
                     {
                         Debug.WriteLine("PatientIC from Queue:" + patientMsg.AsString);
                         ProcessPatientQueueMsg(patientMsg);
                     }
-                    if (patientMsg == null)
+                    if (patientMsg == null || doctorMsg== null)
                     {
                         System.Threading.Thread.Sleep(10000); //Sleeps for 10 seconds
                     }
                 }
                 catch(StorageException se)
                 {
+                    if(doctorMsg != null && doctorMsg.DequeueCount > 5)
+                    {
+                        this.doctorQueue.DeleteMessage(doctorMsg);
+                        Trace.TraceError("Deleting poison queue item " + "from doctorQueue: {0}", doctorMsg.AsString);
+                    }
                     if(patientMsg!=null && patientMsg.DequeueCount > 5)
                     {
                         this.patientQueue.DeleteMessage(patientMsg);
@@ -161,6 +213,7 @@ namespace BrianWorkerRole
 
             Trace.TraceInformation("Create patient queue container");
             CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+            CloudQueueClient queueClient2 = storageAccount.CreateCloudQueueClient();
 
             //Patient Images blob
             Trace.TraceInformation("Create images blob container");
@@ -176,9 +229,32 @@ namespace BrianWorkerRole
                 });
 
             }
+
+            //Doctor Images blob
+            Trace.TraceInformation("Create images blob container");
+            var blobClient2 = storageAccount.CreateCloudBlobClient();
+            imagesBl0bContainer = blobClient.GetContainerReference("doctorimages");
+
+            if (imagesBl0bContainer.CreateIfNotExists())
+            {
+                imagesBl0bContainer.SetPermissions(
+                new BlobContainerPermissions
+                {
+                    PublicAccess = BlobContainerPublicAccessType.Blob
+                });
+
+            }
+
+            
+            //Patient
             Trace.TraceInformation("Create images queue container");
             patientQueue = queueClient.GetQueueReference("images");
             patientQueue.CreateIfNotExists();
+
+            //Doctor
+            Trace.TraceInformation("Create doctorimage queue container");
+            doctorQueue = queueClient2.GetQueueReference("docimages");
+            doctorQueue.CreateIfNotExists();
 
             Trace.TraceInformation("Storage initialized");
             //End of storage initalisation.

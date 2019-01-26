@@ -327,6 +327,14 @@
     <Compile Include="Migrations\201901261646353_catchupmigration.Designer.cs">
       <DependentUpon>201901261646353_catchupmigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901261812259_modifyDoctor.cs" />
+    <Compile Include="Migrations\201901261812259_modifyDoctor.Designer.cs">
+      <DependentUpon>201901261812259_modifyDoctor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901261902161_thumbnailDoc.cs" />
+    <Compile Include="Migrations\201901261902161_thumbnailDoc.Designer.cs">
+      <DependentUpon>201901261902161_thumbnailDoc.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -612,6 +620,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901261646353_catchupmigration.resx">
       <DependentUpon>201901261646353_catchupmigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901261812259_modifyDoctor.resx">
+      <DependentUpon>201901261812259_modifyDoctor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901261902161_thumbnailDoc.resx">
+      <DependentUpon>201901261902161_thumbnailDoc.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

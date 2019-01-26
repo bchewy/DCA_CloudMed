@@ -8,12 +8,93 @@ using System.Web;
 using System.Web.Mvc;
 using WebRole1.DAL;
 using WebRole1.Models;
+using Microsoft.WindowsAzure.Storage.Table.DataServices;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.ServiceRuntime;
+using Microsoft.WindowsAzure.Storage.RetryPolicies;
+using System.Threading.Tasks;
+using System.IO;
+using System.Diagnostics;
+using Microsoft.WindowsAzure.Storage.Queue;
+using Microsoft.WindowsAzure.Storage.Queue.Protocol;
+using System.Threading;
 
 namespace WebRole1.Controllers
 {
     public class DoctorsController : Controller
     {
         private CloudMedContext db = new CloudMedContext();
+        private static CloudBlobContainer imagesBlobContainer;
+        private CloudQueue doctorQueue; 
+
+
+        public DoctorsController()
+        {
+            InitStorage();
+        }
+
+
+
+        //Init Storage Method
+        private void InitStorage()
+        {
+            var storageAccount = CloudStorageAccount.Parse
+            (RoleEnvironment.GetConfigurationSettingValue
+            ("StorageConnectionString"));
+
+            var blobClient2 = storageAccount.CreateCloudBlobClient();
+            blobClient2.DefaultRequestOptions.RetryPolicy = new LinearRetry(TimeSpan.FromSeconds(3), 3); //Set permissions
+            imagesBlobContainer = blobClient2.GetContainerReference("doctorimages");
+            imagesBlobContainer.CreateIfNotExists();
+            imagesBlobContainer.SetPermissions(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
+
+            
+            CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+            queueClient.DefaultRequestOptions.RetryPolicy = new LinearRetry(TimeSpan.FromSeconds(3), 3);
+
+            doctorQueue = queueClient.GetQueueReference("docimages");
+            doctorQueue.CreateIfNotExists();
+            
+        }
+
+        //Upload and Save Blob Method
+        private async Task<CloudBlockBlob> UploadAndSaveBlobAsync(HttpPostedFileBase imageFile)//Can be called and reliable under heavy loads
+        {
+            Trace.TraceInformation("Uploading image file {0}", imageFile.FileName);
+            string blobName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+            CloudBlockBlob imageBlob = imagesBlobContainer.GetBlockBlobReference(blobName);
+            using (var fileStream = imageFile.InputStream)
+            {
+                await imageBlob.UploadFromStreamAsync(fileStream);
+            }
+            Trace.TraceInformation("Uploaded image file to {0}", imageBlob.Uri.ToString());
+            return imageBlob;
+        }
+
+        //Delete Blob Method
+        private async Task DeleteBlobAsync(string imageURL)
+        {
+            if (!string.IsNullOrWhiteSpace(imageURL))
+            {
+                Uri blobUri = new Uri(imageURL);
+                string blobName = blobUri.Segments
+                [blobUri.Segments.Length - 1]; Trace.TraceInformation("Deleting image blob {0}", blobName);
+                CloudBlockBlob blobToDelete = imagesBlobContainer.
+                GetBlockBlobReference(blobName);
+                await blobToDelete.DeleteIfExistsAsync();
+
+            }
+
+        }
+
+
+
+
+
+
+
 
         // GET: Doctors
         public ActionResult Index()
@@ -47,12 +128,29 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DoctorID,Specialty,PersonID,ICNo,Name,Citizenship,EmailAddr")] Doctor doctor)
+        public async Task<ActionResult> Create([Bind(Include = "DoctorID,Specialty,PersonID,ICNo,Name,Citizenship,EmailAddr,DoctorImageURL")] Doctor doctor, HttpPostedFileBase imageFile)
         {
+            CloudBlockBlob imageBlob = null;
+
             if (ModelState.IsValid)
             {
+                bool imageIn = false;
+                string queueMsg = "";
+                if (imageFile != null && imageFile.ContentLength != 0)
+                {
+                    imageBlob = await UploadAndSaveBlobAsync(imageFile);
+                    doctor.DoctorImageURL = imageBlob.Uri.ToString();
+                    Trace.TraceInformation("The Blob URL is:" + imageBlob.Uri.ToString());
+                    imageIn = true;
+                }
                 db.Doctors.Add(doctor);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
+                queueMsg = doctor.DoctorID.ToString();
+                if (imageIn)
+                {
+                    var queueMessage = new CloudQueueMessage(queueMsg);
+                    await doctorQueue.AddMessageAsync(queueMessage);
+                }
                 return RedirectToAction("Index");
             }
 
@@ -79,12 +177,28 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DoctorID,Specialty,PersonID,ICNo,Name,Citizenship,EmailAddr")] Doctor doctor)
+        public async Task<ActionResult> Edit([Bind(Include = "DoctorID,Specialty,PersonID,ICNo,Name,Citizenship,EmailAddr,DoctorImageURL")] Doctor doctor, HttpPostedFileBase imageFile)
         {
+            CloudBlockBlob imageBlob = null;
             if (ModelState.IsValid)
             {
+                bool imageChange = false;
+                string queueMsg = "";
+                if (imageFile != null && imageFile.ContentLength != 0)
+                {
+                    await DeleteBlobAsync(doctor.DoctorImageURL);
+                    imageBlob = await UploadAndSaveBlobAsync(imageFile);
+                    doctor.DoctorImageURL = imageBlob.Uri.ToString();
+                }
                 db.Entry(doctor).State = EntityState.Modified;
-                db.SaveChanges();
+                await db.SaveChangesAsync();
+                queueMsg = doctor.DoctorID.ToString();
+
+                if (imageChange)
+                {
+                    var queueMessage = new CloudQueueMessage(queueMsg);
+                    await doctorQueue.AddMessageAsync(queueMessage);
+                }
                 return RedirectToAction("Index");
             }
             return View(doctor);
@@ -108,11 +222,13 @@ namespace WebRole1.Controllers
         // POST: Doctors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Doctor doctor = db.Doctors.Find(id);
+            await DeleteBlobAsync(doctor.DoctorImageURL);
             db.Doctors.Remove(doctor);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
+            Trace.TraceInformation("Delete frn {0}", doctor.ICNo);
             return RedirectToAction("Index");
         }
 

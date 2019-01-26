@@ -4,63 +4,36 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Doctor</h4>
+<div class="container">
+    <h4 class="text-center mt-2">Doctor Details</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Specialty)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Specialty)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PersonID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PersonID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ICNo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ICNo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Citizenship)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Citizenship)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EmailAddr)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EmailAddr)
-        </dd>
-
-    </dl>
+    <div class="row">
+        <div class="col-md-6">
+            <img src="@Html.Raw(Model.DoctorImageURL)" class="w-100 h-100" />
+        </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                <strong>Doctor Name:</strong><br />
+                @Html.DisplayFor(model => model.Name)
+            </div>
+            <div class="form-group">
+                <strong>Doctor IC No:</strong><br />
+                @Html.DisplayFor(model => model.ICNo)
+            </div>
+            <div class="form-group">
+                <strong>Doctor DOB:</strong><br />
+                @Html.DisplayFor(model => model.Specialty)
+            </div>
+            <div class="form-group">
+                <strong>Doctor Citizenship:</strong><br />
+                @Html.DisplayFor(model => model.Citizenship)
+            </div>
+            <div class="form-group">
+                <strong>Doctor Email:</strong><br />
+                @Html.DisplayFor(model => model.EmailAddr)
+            </div>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.DoctorID }, new { @class = "btn btn-warning" }) x
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.DoctorID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
