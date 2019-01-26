@@ -323,6 +323,10 @@
     <Compile Include="Migrations\201901261231209_CourseWebSeminarUpdates.Designer.cs">
       <DependentUpon>201901261231209_CourseWebSeminarUpdates.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901261646353_catchupmigration.cs" />
+    <Compile Include="Migrations\201901261646353_catchupmigration.Designer.cs">
+      <DependentUpon>201901261646353_catchupmigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -605,6 +609,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901261231209_CourseWebSeminarUpdates.resx">
       <DependentUpon>201901261231209_CourseWebSeminarUpdates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901261646353_catchupmigration.resx">
+      <DependentUpon>201901261646353_catchupmigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
