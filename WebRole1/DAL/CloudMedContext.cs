@@ -25,6 +25,8 @@ namespace WebRole1.DAL
         public DbSet<Patient> Patients { get; set; }
 
         public System.Data.Entity.DbSet<WebRole1.Models.PatientViewModel> PatientViewModels { get; set; }
+
+        public System.Data.Entity.DbSet<WebRole1.Models.MedicalEquipmentViewModel> MedicalEquipmentViewModels { get; set; }
         //Table for Person, Seminar or Webinar?
 
     }

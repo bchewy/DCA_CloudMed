@@ -283,6 +283,14 @@
     <Compile Include="Migrations\201901251101301_added annotation on the medical equipments.Designer.cs">
       <DependentUpon>201901251101301_added annotation on the medical equipments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901260757472_testing medical equipment index.cs" />
+    <Compile Include="Migrations\201901260757472_testing medical equipment index.Designer.cs">
+      <DependentUpon>201901260757472_testing medical equipment index.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901260807011_updated on medical equipment .cs" />
+    <Compile Include="Migrations\201901260807011_updated on medical equipment .Designer.cs">
+      <DependentUpon>201901260807011_updated on medical equipment .cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -292,7 +300,9 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MedicalEquipment.cs" />
+    <Compile Include="Models\MedicalEquipmentViewModel.cs" />
     <Compile Include="Models\MedicalRecord.cs" />
+    <Compile Include="Models\MedicalRecordsViewModel.cs" />
     <Compile Include="Models\Patient.cs" />
     <Compile Include="Models\PatientViewModel.cs" />
     <Compile Include="Models\Person.cs" />
@@ -445,11 +455,7 @@
     <Content Include="Views\Patients\Details.cshtml" />
     <Content Include="Views\Patients\Edit.cshtml" />
     <Content Include="Views\Patients\Index.cshtml" />
-    <Content Include="Views\MedicalEquipments\Create.cshtml" />
     <Content Include="Views\MedicalEquipments\Delete.cshtml" />
-    <Content Include="Views\MedicalEquipments\Details.cshtml" />
-    <Content Include="Views\MedicalEquipments\Edit.cshtml" />
-    <Content Include="Views\MedicalEquipments\Index.cshtml" />
     <Content Include="Views\UsersAdmin\Index.cshtml" />
     <Content Include="Views\UsersAdmin\Edit.cshtml" />
     <Content Include="Views\UsersAdmin\Details.cshtml" />
@@ -471,11 +477,17 @@
     <Content Include="Views\Doctors\Details.cshtml" />
     <Content Include="Views\Doctors\Edit.cshtml" />
     <Content Include="Views\Doctors\Index.cshtml" />
-    <Content Include="Views\MedicalRecords\Create.cshtml" />
     <Content Include="Views\MedicalRecords\Delete.cshtml" />
+    <Content Include="Views\MedicalRecords\Index.cshtml" />
+    <Content Include="Views\MedicalRecords\Create.cshtml" />
+    <Content Include="Views\MedicalRecords\Edit.cshtml" />
     <Content Include="Views\MedicalRecords\Details.cshtml" />
     <Content Include="Views\MedicalRecords\Edit.cshtml" />
     <Content Include="Views\MedicalRecords\Index.cshtml" />
+    <Content Include="Views\MedicalEquipments\Create.cshtml" />
+    <Content Include="Views\MedicalEquipments\Edit.cshtml" />
+    <Content Include="Views\MedicalEquipments\Details.cshtml" />
+    <Content Include="Views\MedicalEquipments\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
@@ -530,6 +542,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901251101301_added annotation on the medical equipments.resx">
       <DependentUpon>201901251101301_added annotation on the medical equipments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901260757472_testing medical equipment index.resx">
+      <DependentUpon>201901260757472_testing medical equipment index.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901260807011_updated on medical equipment .resx">
+      <DependentUpon>201901260807011_updated on medical equipment .cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
