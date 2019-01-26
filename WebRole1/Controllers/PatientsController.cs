@@ -17,6 +17,10 @@ using Microsoft.WindowsAzure.Storage.RetryPolicies;
 using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
+using Microsoft.WindowsAzure.Storage.Queue;
+using Microsoft.WindowsAzure.Storage.Queue.Protocol;
+using System.Threading;
+
 
 namespace WebRole1.Controllers
 {
@@ -24,6 +28,7 @@ namespace WebRole1.Controllers
     {
         private CloudMedContext db = new CloudMedContext();
         private static CloudBlobContainer imagesBlobContainer;
+        private CloudQueue patientQueue; //Not intended as literal "patientQueue" --> This is a queue for images --> thumbnails 
 
         public PatientsController()
         {
@@ -41,6 +46,12 @@ namespace WebRole1.Controllers
             imagesBlobContainer = blobClient.GetContainerReference("patientimages");
             imagesBlobContainer.CreateIfNotExists();
             imagesBlobContainer.SetPermissions(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
+
+            CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+            queueClient.DefaultRequestOptions.RetryPolicy = new LinearRetry(TimeSpan.FromSeconds(3), 3);
+
+            patientQueue = queueClient.GetQueueReference("images");
+            patientQueue.CreateIfNotExists();
         }
 
         //Upload and Save Blob Method
@@ -127,6 +138,8 @@ namespace WebRole1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "PatientID,Address,DoB,PersonID,ICNo,Name,Citizenship,EmailAddr,PatientImageURL")] PatientViewModel PatientViewModel,HttpPostedFileBase imageFile)
         {
+            bool imageIn = false;
+            string queueMsg = "";
             CloudBlockBlob imageBlob = null;
             if (ModelState.IsValid)
             {
@@ -135,6 +148,7 @@ namespace WebRole1.Controllers
                     imageBlob = await UploadAndSaveBlobAsync(imageFile);
                     PatientViewModel.PatientImageURL = imageBlob.Uri.ToString();
                     Trace.TraceInformation("The Blob URL is:" + imageBlob.Uri.ToString());
+                    imageIn = true;
                 }
 
                 var patient = new Patient()
@@ -149,7 +163,13 @@ namespace WebRole1.Controllers
                     PatientImageURL = PatientViewModel.PatientImageURL
                 };
                 db.Patients.Add(patient);
-                await db.SaveChangesAsync(); 
+                await db.SaveChangesAsync();
+                queueMsg = patient.ICNo.ToString(); //Adds Patient's IC to queue
+                if (imageIn)
+                {
+                    var queueMessage = new CloudQueueMessage(queueMsg);
+                    await patientQueue.AddMessageAsync(queueMessage);
+                }
                 return RedirectToAction("Index");
             }
 
@@ -181,8 +201,11 @@ namespace WebRole1.Controllers
             CloudBlockBlob imageBlob = null;
             if (ModelState.IsValid)
             {
+                bool imageChange = false;
+                string queueMsg = "";
                 if (imageFile != null && imageFile.ContentLength != 0)
                 {
+
                     await DeleteBlobAsync(PatientViewModel.PatientImageURL);
                     imageBlob = await UploadAndSaveBlobAsync(imageFile);
                     PatientViewModel.PatientImageURL = imageBlob.Uri.ToString();
@@ -198,10 +221,15 @@ namespace WebRole1.Controllers
                 patient.Address = PatientViewModel.Address;
                 patient.DoB = PatientViewModel.DoB;
                 patient.PatientImageURL = PatientViewModel.PatientImageURL;
-
+                queueMsg = patient.ICNo.ToString();//PatientID to queue
 
                 db.Entry(patient).State = EntityState.Modified;
                 await db.SaveChangesAsync();
+                if (imageChange)
+                {
+                    var queueMessage = new CloudQueueMessage(queueMsg);
+                    await patientQueue.AddMessageAsync(queueMessage);
+                }
                 return RedirectToAction("Index");
             }
             return View(PatientViewModel);

@@ -11,6 +11,12 @@ namespace WebRole1.DAL
         {
         }
 
+        //Added for worker role
+        public CloudMedContext(string dbConnString) : base(dbConnString)
+        {
+            this.Database.CommandTimeout = 300;
+        }
+
         public DbSet<Consultation> Consultations { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Doctor> Doctors { get; set; }

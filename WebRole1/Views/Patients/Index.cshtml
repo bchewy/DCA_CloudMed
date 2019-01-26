@@ -5,7 +5,11 @@
 }
 
 <h2>Index</h2>
-
+<style>
+    table.table tbody tr td > a{
+        color:black;
+    }
+</style>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -59,8 +63,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.EmailAddr)
         </td>
+        <!--
         <td>
-            <img src="@Html.Raw(item.PatientImageURL)" />
+            <img src="@*Html.Raw(item.PatientImageURL)*@" />
+        </td> -->
+        <td>
+            <img src="@Html.Raw(item.PatientThumbNailURl)" width="80", height="60" />
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PatientID }) |
