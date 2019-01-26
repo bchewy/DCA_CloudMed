@@ -164,7 +164,7 @@ namespace WebRole1.Controllers
                 };
                 db.Patients.Add(patient);
                 await db.SaveChangesAsync();
-                queueMsg = patient.ICNo.ToString(); //Adds Patient's IC to queue
+                queueMsg = patient.PatientID.ToString(); //Adds Patient's IC to queue
                 if (imageIn)
                 {
                     var queueMessage = new CloudQueueMessage(queueMsg);
@@ -221,7 +221,7 @@ namespace WebRole1.Controllers
                 patient.Address = PatientViewModel.Address;
                 patient.DoB = PatientViewModel.DoB;
                 patient.PatientImageURL = PatientViewModel.PatientImageURL;
-                queueMsg = patient.ICNo.ToString();//PatientID to queue
+                queueMsg = patient.PatientID.ToString();//PatientID to queue
 
                 db.Entry(patient).State = EntityState.Modified;
                 await db.SaveChangesAsync();
