@@ -24,6 +24,8 @@
   <WorkerRole name="BrianWorkerRole" vmsize="Standard_D1_v2">
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="StorageConnectionString" />
+      <Setting name="CloudMedDbConnectionString" />
     </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>
