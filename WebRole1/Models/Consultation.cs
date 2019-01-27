@@ -22,6 +22,7 @@ namespace WebRole1.Models
         [Required]
         public string Status { get; set; }
         [Required]
+        [Display(Name = "Consultation Type")]
         public string ConsultationType { get; set; }
 
         [ForeignKey("Patient")]
