@@ -360,6 +360,10 @@
     <Compile Include="Migrations\201901271838125_lolx.Designer.cs">
       <DependentUpon>201901271838125_lolx.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901271957236_final db.cs" />
+    <Compile Include="Migrations\201901271957236_final db.Designer.cs">
+      <DependentUpon>201901271957236_final db.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -675,6 +679,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901271838125_lolx.resx">
       <DependentUpon>201901271838125_lolx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901271957236_final db.resx">
+      <DependentUpon>201901271957236_final db.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

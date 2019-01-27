@@ -20,7 +20,7 @@ namespace WebRole1.Controllers
         public ViewResult Index(string so, string searchString)
         {
    
-
+            
             ViewBag.NameSortParam = String.IsNullOrEmpty(so) ? "Name" : "";
             var medicalequipment = from me in db.MedicalEquipment select me;
             if (!String.IsNullOrEmpty(searchString))
