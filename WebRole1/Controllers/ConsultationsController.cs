@@ -113,7 +113,7 @@ namespace WebRole1.Controllers
 
             return View();
         }
-
+        /*
         [HttpPost]
         public ActionResult PurchaseCart(Consultation model)
         {
@@ -121,7 +121,7 @@ namespace WebRole1.Controllers
             model.JavascriptToRun = "ShowErrorPopup()";
             return View(model);
           
-        }
+        }*/
         // POST: Consultations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -135,7 +135,7 @@ namespace WebRole1.Controllers
                 if (present == consultation.TimeStamp)
                 {
                     ModelState.AddModelError("Date Error", "The entered Timestamp is taken for this doctor");
-                    PurchaseCart(consultation);
+                    //PurchaseCart(consultation);
                 }
             }
             if (ModelState.IsValid)
