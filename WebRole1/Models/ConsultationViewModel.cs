@@ -10,20 +10,20 @@ namespace WebRole1.Models
     {
         [Key]
         public int ConsultationID { get; set; }
-
-        public int QueueNo { get; set; }
-
         [Display(Name = "Consultation Time")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy H:mm:ss tt}"), DataType(DataType.DateTime)]
         [Required]
         public DateTime TimeStamp { get; set; }
 
-        public string PatientName { get; set; }
-
-        public string DoctorName { get; set; }
         [Required]
         public string Status { get; set; }
         [Required]
         public string ConsultationType { get; set; }
+
+        [Required]
+        public Doctor doctor { get; set; }
+
+        [Required]
+        public Patient patient { get; set; }
     }
 }
