@@ -16,7 +16,7 @@ namespace WebRole1.Controllers
         private CloudMedContext db = new CloudMedContext();
 
         // GET: MedicalEquipments
-        [Authorize(Roles = "Administrator, Doctor")]
+        //[Authorize(Roles = "Administrator, Doctor")]
         public ViewResult Index(string so, string searchString)
         {
    
