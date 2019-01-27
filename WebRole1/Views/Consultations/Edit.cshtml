@@ -8,110 +8,112 @@
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-        <div class="container">
-            <div class="form-horizontal">
-                <h4 class="text-center mt-2">Edit Consultation</h4>
-                <p class="lead text-center">
-                    To edit a Consultation, key in the details here and proceed with your consultation at the specified timing!
-                </p>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @Html.HiddenFor(model => model.ConsultationID)
+<div class="container">
+    <div class="mt-4">
+        <div class="form-horizontal">
+            <h4 class="text-center mt-2">Edit Consultation</h4>
+            <p class="lead text-center">
+                To edit a Consultation, key in the details here and proceed with your consultation at the specified timing!
+            </p>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ConsultationID)
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.QueueNo, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.QueueNo, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.QueueNo, "", new { @class = "text-danger" })
-                    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.QueueNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.QueueNo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.QueueNo, "", new { @class = "text-danger" })
                 </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TimeStamp, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.TimeStamp, new { htmlAttributes = new { @class = "form-control datepicker" } })
-                        @Html.ValidationMessageFor(model => model.TimeStamp, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="row">
-                        <div class="col-md-2">
-
-                        </div>
-                        <div class="col-md-3">
-                            @Html.RadioButtonFor(m => m.Status, "Pending") Pending&nbsp;&nbsp;
-                        </div>
-                        <div class="col-md-3">
-                            @Html.RadioButtonFor(m => m.Status, "Now Consulting") Now Consulting&nbsp;&nbsp;
-                        </div>
-                        <div class="col-md-3">
-                            @Html.RadioButtonFor(m => m.Status, "Consulted") Consulted&nbsp;&nbsp;
-                        </div>
-                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ConsultationType, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="row">
-                        <div class="col-md-2">
-
-                        </div>
-                        <div class="col-md-3">
-                            @Html.RadioButtonFor(m => m.ConsultationType, "Urgent") Urgent&nbsp;&nbsp;
-                        </div>
-                        <div class="col-md-3">
-                            @Html.RadioButtonFor(m => m.ConsultationType, "Normal") Normal&nbsp;&nbsp;
-                        </div>
-                        <div class="col-md-3">
-                            @Html.RadioButtonFor(m => m.ConsultationType, "When Available") When Available&nbsp;&nbsp;
-                        </div>
-                        @Html.ValidationMessageFor(model => model.ConsultationType, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.Label("Patient Name", "Patient's Name", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("PatientID", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.PatientID, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.Label("Doctor Name", "Doctor's Name", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("DoctorID", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.DoctorID, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-offset-2 col-md-8">
-                            <input type="submit" value="Save" class="btn btn-primary" />
-
-                        </div>
-
-                        <div class="col-md-offset-2 col-md-4">
-                            @Html.ActionLink("Back to List", "Index")
-                        </div>
-                    </div>
-                </div>                        
-               
             </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TimeStamp, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TimeStamp, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                    @Html.ValidationMessageFor(model => model.TimeStamp, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="row">
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-3">
+                        @Html.RadioButtonFor(m => m.Status, "Pending") Pending&nbsp;&nbsp;
+                    </div>
+                    <div class="col-md-3">
+                        @Html.RadioButtonFor(m => m.Status, "Now Consulting") Now Consulting&nbsp;&nbsp;
+                    </div>
+                    <div class="col-md-3">
+                        @Html.RadioButtonFor(m => m.Status, "Consulted") Consulted&nbsp;&nbsp;
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ConsultationType, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="row">
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-3">
+                        @Html.RadioButtonFor(m => m.ConsultationType, "Urgent") Urgent&nbsp;&nbsp;
+                    </div>
+                    <div class="col-md-3">
+                        @Html.RadioButtonFor(m => m.ConsultationType, "Normal") Normal&nbsp;&nbsp;
+                    </div>
+                    <div class="col-md-3">
+                        @Html.RadioButtonFor(m => m.ConsultationType, "When Available") When Available&nbsp;&nbsp;
+                    </div>
+                    @Html.ValidationMessageFor(model => model.ConsultationType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Patient Name", "Patient's Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("PatientID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.PatientID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Doctor Name", "Doctor's Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("DoctorID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DoctorID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-offset-2 col-md-8">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+
+                    </div>
+
+                    <div class="col-md-offset-2 col-md-4">
+                        @Html.ActionLink("Back to List", "Index")
+                    </div>
+                </div>
+            </div>
+
         </div>
+    </div>
+</div>
     }
 
-<link href="~/Content/jquery.datetimepicker.min.css" rel="stylesheet" />
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
-    <script src="~/Scripts/jquery.datetimepicker.min.js"></script>
-    <script>
+    <link href="~/Content/jquery.datetimepicker.min.css" rel="stylesheet" />
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
+        <script src="~/Scripts/jquery.datetimepicker.min.js"></script>
+        <script>
 
 
         $(function () {
@@ -126,5 +128,5 @@
             });
 
         });
-    </script>
-}
+        </script>
+    }

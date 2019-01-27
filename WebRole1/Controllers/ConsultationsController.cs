@@ -16,10 +16,12 @@ namespace WebRole1.Controllers
         private CloudMedContext db = new CloudMedContext();
 
         // GET: Consultations
-        public ActionResult Index(string Queueso, string searchString)
+        public ActionResult Index(string Queueso, string docNameSort, string patNameSort, string searchString)
         {
-            ViewBag.NameSortParam = String.IsNullOrEmpty(Queueso) ? "QueueNo" : "";
+            ViewBag.QueueSortParam = String.IsNullOrEmpty(Queueso) ? "QueueNo" : "";
             ViewBag.QueueSortParam = Queueso == "QueueNo" ? "QueueNo" : "QueueNodesc";
+            
+
             var consultations = db.Consultations.Include(c => c.Doctor).Include(c => c.Patient);
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -60,8 +62,10 @@ namespace WebRole1.Controllers
         // GET: Consultations/Create
         public ActionResult Create()
         {
+
             ViewBag.DoctorID = new SelectList(db.Doctors, "DoctorID", "Name");
             ViewBag.PatientID = new SelectList(db.Patients, "PatientID", "Name");
+
             return View();
         }
 
@@ -70,11 +74,21 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ConsultationID,QueueNo,TimeStamp,Status,ConsultationType,PatientID,DoctorID")] Consultation consultation)
+        public ActionResult Create([Bind(Include = "ConsultationID,TimeStamp,Status,ConsultationType,PatientID,DoctorID")] Consultation consultation)
         {
             if (ModelState.IsValid)
             {
-                db.Consultations.Add(consultation);
+                var query = db.Consultations.Count();
+                Consultation consultation1 = new Consultation()
+                {
+                    QueueNo = query+1,
+                    ConsultationType = consultation.ConsultationType,
+                    Status = consultation.Status,
+                    TimeStamp = consultation.TimeStamp,
+                    PatientID = consultation.PatientID,
+                    DoctorID = consultation.DoctorID
+                };
+                db.Consultations.Add(consultation1);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
