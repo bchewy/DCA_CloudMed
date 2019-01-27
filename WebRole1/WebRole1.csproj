@@ -344,6 +344,10 @@
     <Compile Include="Migrations\201901270602285_trying to fix me vm.Designer.cs">
       <DependentUpon>201901270602285_trying to fix me vm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901271407448_test.cs" />
+    <Compile Include="Migrations\201901271407448_test.Designer.cs">
+      <DependentUpon>201901271407448_test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -649,6 +653,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901270602285_trying to fix me vm.resx">
       <DependentUpon>201901270602285_trying to fix me vm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901271407448_test.resx">
+      <DependentUpon>201901271407448_test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
