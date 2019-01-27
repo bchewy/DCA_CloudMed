@@ -27,19 +27,6 @@ namespace WebRole1.Models
         [Required(ErrorMessage = "What is the serial number of this medical equipment")]
         public string SoftwareVersion { get; set; }
 
-        /*
-       // [Required(ErrorMessage = "What is the warrantly for this medical equipment")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy}"), DataType(DataType.DateTime)]
-        public DateTime Warranty { get; set; }
-
-        [Display(Name="Purchase Date")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy}"), DataType(DataType.DateTime)]
-        public DateTime PurchaseDate { get; set; }
-
-        [Display(Name = "Last Maintenance")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy}"), DataType(DataType.DateTime)]
-        public DateTime LastMaintenance { get; set; }
-        */
         public virtual ICollection<MedicalRecord> MedicalRecords { get; set; }
 
     }
