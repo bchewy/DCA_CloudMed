@@ -24,6 +24,7 @@ using System.Threading;
 
 namespace WebRole1.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class PatientsController : Controller
     {
         private CloudMedContext db = new CloudMedContext();
