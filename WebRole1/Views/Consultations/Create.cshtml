@@ -2,8 +2,8 @@
 
 @{
     ViewBag.Title = "Create";
-}
 
+}
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -98,15 +98,13 @@
     <script src="~/Scripts/jquery.datetimepicker.min.js"></script>
     <script>
 
-
+        
+        @ViewBag.Javascript
         $(function () {
             jQuery('.datepicker').datetimepicker();
         });
-
-        @Model.JavascriptToRun
-        function ShowErrorPopup() {
-            alert('Sorry! The specified timing is already taken!');
-        }
     </script>
+    
+
 }
 

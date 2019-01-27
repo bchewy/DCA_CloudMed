@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -18,16 +19,20 @@ namespace WebRole1.Controllers
         // GET: Consultations
         public ActionResult Index(string Queueso, string docNameSort, string patNameSort, string searchString)
         {
+           
+            var userID = User.Identity.GetUserId();
+            var consultations = db.Consultations.Include(c => c.Doctor).Include(c => c.Patient);
+           
+
             ViewBag.QueueSortParam = String.IsNullOrEmpty(Queueso) ? "QueueNo" : "";
             ViewBag.QueueSortParam = Queueso == "QueueNo" ? "QueueNo" : "QueueNodesc";
-            
 
-            var consultations = db.Consultations.Include(c => c.Doctor).Include(c => c.Patient);
+
             if (!String.IsNullOrEmpty(searchString))
-            {
-                consultations = consultations.Where(p => p.Doctor.Name.Contains(searchString));
-                
-            }
+                {
+                    consultations = consultations.Where(p => p.Doctor.Name.Contains(searchString));
+
+                }
             switch (Queueso)
             {
                 case "QueueNo":
@@ -40,7 +45,7 @@ namespace WebRole1.Controllers
                     break;
             }
             List<ConsultationViewModel> consultVMList = new List<ConsultationViewModel>();
-            foreach(Consultation consult in db.Consultations)
+            foreach (Consultation consult in db.Consultations)
             {
                 ConsultationViewModel consultVM = new ConsultationViewModel();
                 consultVM.ConsultationType = consult.ConsultationType;
@@ -60,11 +65,11 @@ namespace WebRole1.Controllers
                 {
                     consultVM.DateColor = "brown";
                 }
-                if (consult.QueueNo>4)
+                if (consult.QueueNo > 4)
                 {
                     consultVM.QueueColor = "orange";
                 }
-                else if (consult.QueueNo>9)
+                else if (consult.QueueNo > 9)
                 {
                     consultVM.QueueColor = "red";
                 }
@@ -84,10 +89,9 @@ namespace WebRole1.Controllers
                 }
                 consultVMList.Add(consultVM);
             }
-
+            
             return View("Index", consultVMList);
         }
-
         // GET: Consultations/Details/5
         public ActionResult Details(int? id)
         {
@@ -103,7 +107,7 @@ namespace WebRole1.Controllers
 
             return View(consultation);
         }
-
+        [Authorize(Roles = "Administrator, Patient")]
         // GET: Consultations/Create
         public ActionResult Create()
         {
@@ -113,18 +117,11 @@ namespace WebRole1.Controllers
 
             return View();
         }
-        /*
-        [HttpPost]
-        public ActionResult PurchaseCart(Consultation model)
-        {
-            // Do something useful
-            model.JavascriptToRun = "ShowErrorPopup()";
-            return View(model);
-          
-        }*/
+
         // POST: Consultations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator, Patient")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ConsultationID,TimeStamp,Status,ConsultationType,PatientID,DoctorID")] Consultation consultation)
@@ -135,7 +132,7 @@ namespace WebRole1.Controllers
                 if (present == consultation.TimeStamp)
                 {
                     ModelState.AddModelError("Date Error", "The entered Timestamp is taken for this doctor");
-                    //PurchaseCart(consultation);
+                    return JavaScript("window.alert('The Specified timing is taken already.');");
                 }
             }
             if (ModelState.IsValid)
@@ -165,6 +162,7 @@ namespace WebRole1.Controllers
         }
 
         // GET: Consultations/Edit/5
+        [Authorize(Roles = "Administrator, Patient")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -186,6 +184,7 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator, Patient")]
         public ActionResult Edit([Bind(Include = "ConsultationID,QueueNo,TimeStamp,Status,ConsultationType,PatientID,DoctorID")] Consultation consultation)
         {
             if (ModelState.IsValid)
@@ -208,6 +207,7 @@ namespace WebRole1.Controllers
         }
 
         // GET: Consultations/Delete/5
+        [Authorize(Roles = "Administrator, Patient")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -223,6 +223,7 @@ namespace WebRole1.Controllers
         }
 
         // POST: Consultations/Delete/5
+        [Authorize(Roles = "Administrator, Patient")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
