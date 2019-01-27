@@ -34,5 +34,6 @@ namespace WebRole1.Models
         public virtual Doctor Doctor { get; set; }
         //public virtual ICollection<Doctor> Doctors { get; set; }
         public virtual ICollection<MedicalRecord> MedicalRecords { get; set; }
+        public string JavascriptToRun { get; internal set; }
     }
 }

@@ -39,8 +39,53 @@ namespace WebRole1.Controllers
                 default:
                     break;
             }
+            List<ConsultationViewModel> consultVMList = new List<ConsultationViewModel>();
+            foreach(Consultation consult in db.Consultations)
+            {
+                ConsultationViewModel consultVM = new ConsultationViewModel();
+                consultVM.ConsultationType = consult.ConsultationType;
+                consultVM.QueueNo = consult.QueueNo;
+                consultVM.Status = consult.Status;
+                consultVM.TimeStamp = consult.TimeStamp;
+                consultVM.ConsultationID = consult.ConsultationID;
+                consultVM.patient = consult.Patient;
+                consultVM.doctor = consult.Doctor;
+                consultVM.QueueColor = "green";
+                DateTime thisDay = DateTime.Today;
+                if (consult.TimeStamp >= thisDay)
+                {
+                    consultVM.DateColor = "blue";
+                }
+                else
+                {
+                    consultVM.DateColor = "brown";
+                }
+                if (consult.QueueNo>4)
+                {
+                    consultVM.QueueColor = "orange";
+                }
+                else if (consult.QueueNo>9)
+                {
+                    consultVM.QueueColor = "red";
+                }
+                switch (consult.ConsultationType)
+                {
+                    case "Urgent":
+                        consultVM.typeColor = "red";
+                        break;
+                    case "Normal":
+                        consultVM.typeColor = "orange";
+                        break;
+                    case "When Available":
+                        consultVM.typeColor = "green";
+                        break;
+                    default:
+                        break;
+                }
+                consultVMList.Add(consultVM);
+            }
 
-            return View(consultations.ToList());
+            return View("Index", consultVMList);
         }
 
         // GET: Consultations/Details/5
@@ -69,6 +114,14 @@ namespace WebRole1.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult PurchaseCart(Consultation model)
+        {
+            // Do something useful
+            model.JavascriptToRun = "ShowErrorPopup()";
+            return View(model);
+          
+        }
         // POST: Consultations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -76,9 +129,21 @@ namespace WebRole1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ConsultationID,TimeStamp,Status,ConsultationType,PatientID,DoctorID")] Consultation consultation)
         {
+            List<DateTime> dateQuery = (from thing in db.Consultations where thing.DoctorID == consultation.DoctorID select thing.TimeStamp).ToList();
+            foreach (DateTime present in dateQuery)
+            {
+                if (present == consultation.TimeStamp)
+                {
+                    ModelState.AddModelError("Date Error", "The entered Timestamp is taken for this doctor");
+                    PurchaseCart(consultation);
+                }
+            }
             if (ModelState.IsValid)
             {
+                
+
                 var query = db.Consultations.Count();
+
                 Consultation consultation1 = new Consultation()
                 {
                     QueueNo = query+1,
@@ -88,6 +153,7 @@ namespace WebRole1.Controllers
                     PatientID = consultation.PatientID,
                     DoctorID = consultation.DoctorID
                 };
+
                 db.Consultations.Add(consultation1);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -125,6 +191,14 @@ namespace WebRole1.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(consultation).State = EntityState.Modified;
+                ConsultationViewModel consultationViewModel = new ConsultationViewModel()
+                {
+                    ConsultationType = consultation.ConsultationType,
+                    Status = consultation.Status,
+                    TimeStamp = consultation.TimeStamp,
+                    patient = consultation.Patient,
+                    doctor = consultation.Doctor
+                };
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

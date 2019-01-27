@@ -1,8 +1,4 @@
-﻿@model IEnumerable<WebRole1.Models.Consultation>
-
-@{
-    ViewBag.Title = "Index";
-}
+﻿@model IEnumerable<WebRole1.Models.ConsultationViewModel>
 
 <div class="container">
     <div class="mt-4">
@@ -24,7 +20,6 @@
             }
         </div>
         <hr />
-
         <table class="table">
             <tr>
                 <th>
@@ -34,10 +29,10 @@
                     @Html.Label("Patient Name", "Patient's Name", htmlAttributes: new { @class = "control-label col-md-2" })
                 </th>
                 <th>
-                    @Html.ActionLink("Queue Number", "Index", new { Queueso = ViewBag.QueueSortParam })
+                    @Html.DisplayNameFor(model => model.TimeStamp)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.TimeStamp)
+                    @Html.DisplayNameFor(model => model.QueueNo)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Status)
@@ -45,41 +40,40 @@
                 <th>
                     @Html.DisplayNameFor(model => model.ConsultationType)
                 </th>
-                <th></th>
             </tr>
 
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Doctor.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Patient.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.QueueNo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TimeStamp)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ConsultationType)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ConsultationID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ConsultationID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ConsultationID })
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.doctor.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.patient.Name)
+                </td>
+                <td>
+                    <span style="color:@item.DateColor">@Html.DisplayFor(modelItem => item.TimeStamp)</span>
+                </td>
+                <td>
+                    <span style="color:@item.QueueColor"> @Html.DisplayFor(modelItem => item.QueueNo)</span>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    <span style="color:@item.typeColor">@Html.DisplayFor(modelItem => item.ConsultationType)</span>
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ConsultationID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ConsultationID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ConsultationID })
+                </td>
+            </tr>
             }
 
         </table>
         <div class="text-center my-2">
-            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-secondary" })
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
         </div>
     </div>
 </div>
