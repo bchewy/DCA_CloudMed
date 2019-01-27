@@ -14,12 +14,17 @@ namespace WebRole1.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy H:mm:ss tt}"), DataType(DataType.DateTime)]
         [Required]
         public DateTime TimeStamp { get; set; }
+        [Required]
+        public int QueueNo { get; set; }
 
+        public string QueueColor { get; set; }
+        public string DateColor { get; set; }
         [Required]
         public string Status { get; set; }
         [Required]
         public string ConsultationType { get; set; }
 
+        public string typeColor { get; set; }
         [Required]
         public Doctor doctor { get; set; }
 

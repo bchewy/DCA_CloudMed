@@ -103,7 +103,10 @@
             jQuery('.datepicker').datetimepicker();
         });
 
-
+        @Model.JavascriptToRun
+        function ShowErrorPopup() {
+            alert('Sorry! The specified timing is already taken!');
+        }
     </script>
 }
 

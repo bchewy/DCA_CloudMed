@@ -555,9 +555,9 @@
     <Content Include="Views\Consultations\Delete.cshtml" />
     <Content Include="Views\Consultations\Details.cshtml" />
     <Content Include="Views\Consultations\Edit.cshtml" />
-    <Content Include="Views\Consultations\Index.cshtml" />
     <Content Include="Views\MedicalEquipments\Index.cshtml" />
     <Content Include="Views\Consultations\Create.cshtml" />
+    <Content Include="Views\Consultations\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
