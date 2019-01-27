@@ -343,6 +343,10 @@
     <Compile Include="Migrations\201901270602285_trying to fix me vm.Designer.cs">
       <DependentUpon>201901270602285_trying to fix me vm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901271428197_change some attribute name on medicalequpment.cs" />
+    <Compile Include="Migrations\201901271428197_change some attribute name on medicalequpment.Designer.cs">
+      <DependentUpon>201901271428197_change some attribute name on medicalequpment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -546,9 +550,9 @@
     <Content Include="Views\Courses\Delete.cshtml" />
     <Content Include="Views\Courses\Details.cshtml" />
     <Content Include="Views\Courses\Index.cshtml" />
+    <Content Include="Views\MedicalEquipments\Details.cshtml" />
     <Content Include="Views\MedicalEquipments\Create.cshtml" />
     <Content Include="Views\MedicalEquipments\Edit.cshtml" />
-    <Content Include="Views\MedicalEquipments\Details.cshtml" />
     <Content Include="Views\MedicalEquipments\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -640,6 +644,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901270602285_trying to fix me vm.resx">
       <DependentUpon>201901270602285_trying to fix me vm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901271428197_change some attribute name on medicalequpment.resx">
+      <DependentUpon>201901271428197_change some attribute name on medicalequpment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
