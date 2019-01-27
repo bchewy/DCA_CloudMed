@@ -348,6 +348,10 @@
     <Compile Include="Migrations\201901271407448_test.Designer.cs">
       <DependentUpon>201901271407448_test.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901271528001_CourseImageUrlAddition.cs" />
+    <Compile Include="Migrations\201901271528001_CourseImageUrlAddition.Designer.cs">
+      <DependentUpon>201901271528001_CourseImageUrlAddition.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -555,14 +559,13 @@
     <Content Include="Views\MedicalEquipments\Create.cshtml" />
     <Content Include="Views\MedicalEquipments\Details.cshtml" />
     <Content Include="Views\MedicalEquipments\Edit.cshtml" />
-    <Content Include="Views\Consultations\Create.cshtml" />
     <Content Include="Views\Consultations\Delete.cshtml" />
     <Content Include="Views\Consultations\Details.cshtml" />
     <Content Include="Views\Consultations\Edit.cshtml" />
     <Content Include="Views\MedicalEquipments\Index.cshtml" />
     <Content Include="Views\MedicalEquipments\Edit.cshtml" />
-    <Content Include="Views\Consultations\Create.cshtml" />
     <Content Include="Views\Consultations\Index.cshtml" />
+    <Content Include="Views\Consultations\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -656,6 +659,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901271407448_test.resx">
       <DependentUpon>201901271407448_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901271528001_CourseImageUrlAddition.resx">
+      <DependentUpon>201901271528001_CourseImageUrlAddition.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

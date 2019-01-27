@@ -3,104 +3,125 @@
 @{
     ViewBag.Title = "Index";
 }
+<div class="container">
+    <h2 class="text-center mt-4">Courses</h2>
+    <p class="text-center">Know more on how to keep you and your loved ones safe from medical issues.</p>
 
-<h2>Index</h2>
+    <div>
+        @using (Html.BeginForm())
+        {
+            <div class="row">
+                <div class="col-md-10">
+                    @Html.TextBox("searchString", null, new { @class = "form-control", @placeholder = "Search by Course Title..." })
+                </div>
+                <div class="col-md-2">
+                    <input class="btn btn-block btn-info" type="submit" value="Search" />
+                </div>
+            </div>
+        }
+    </div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CourseType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Category)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CourseFee)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DoctorID)
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.Duration)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Time)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Capacity)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Venue)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.URL)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateReleased)
-        </th>*@
-        <th></th>
-    </tr>
+    @*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
 
-@foreach (var item in Model) {
-    <tr>
-        <th>
-            @Html.DisplayFor(modelItem => item.CourseType)
-        </th>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CourseFee)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DoctorID)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Duration)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Time)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Capacity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Venue)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.URL)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateReleased)
-        </td>*@
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.CourseID }) |
-            @Html.ActionLink("Details", "Details", new { id = item.CourseID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.CourseID })
-        </td>
-    </tr>
-}
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseFee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DoctorID)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Duration)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Time)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Capacity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Venue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.URL)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateReleased)
+                </th>*@
+            <th></th>
+        </tr>
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseFee)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DoctorID)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Duration)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Time)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Capacity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Venue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.URL)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateReleased)
+                    </td>*@
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CourseID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.CourseID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CourseID })
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div class="text-center my-2">
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+    </div>
+</div>
