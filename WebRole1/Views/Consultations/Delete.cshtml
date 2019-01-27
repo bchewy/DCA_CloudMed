@@ -4,69 +4,84 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Consultation</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.Label("Doctor Name", "Doctor's Name", htmlAttributes: new { @class = "control-label col-md-2" })
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Doctor.Name)
-        </dd>
+<div class="container">
+    <div class="mt-4">
 
-        <dt>
-            @Html.Label("Patient Name", "Patient's Name", htmlAttributes: new { @class = "control-label col-md-2" })
-        </dt>
+        <h3>Delete Consultation</h3>
+        <p class="lead">Are you sure you want to delete this?</p>
 
-        <dd>
-            @Html.DisplayFor(model => model.Patient.Name)
-        </dd>
+        <hr />
+        <div class="row">
+            <div class="control-label col-md-3 col-lg-2">
+                <b>@Html.Label("Doctor Name", "Doctor's Name")</b>
+            </div>
+            <div class="col-md-2">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.QueueNo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.QueueNo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TimeStamp)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TimeStamp)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ConsultationType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ConsultationType)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+                @Html.DisplayFor(model => model.Doctor.Name)
+            </div>
         </div>
-    }
-</div>
+
+        <div class="row">
+            <div class="control-label col-md-3 col-lg-2">
+                <b>@Html.Label("Patient Name", "Patient's Name")</b>
+            </div>
+            <div class="col-md-2">
+
+                @Html.DisplayFor(model => model.Patient.Name)
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="control-label col-md-3 col-lg-2">
+                <b>@Html.DisplayNameFor(model => model.QueueNo)</b>
+            </div>
+            <div class="col-md-2">
+
+                @Html.DisplayFor(model => model.QueueNo)
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="control-label col-md-3 col-lg-2">
+                <b> @Html.DisplayNameFor(model => model.TimeStamp)</b>
+            </div>
+            <div class="col-md-2">
+                @Html.DisplayFor(model => model.TimeStamp)
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="control-label col-md-3 col-lg-2">
+                <b> @Html.DisplayNameFor(model => model.Status)</b>
+            </div>
+            <div class="col-md-2">
+                @Html.DisplayFor(model => model.Status)
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="control-label col-md-3 col-lg-2">
+                <b> @Html.DisplayNameFor(model => model.ConsultationType)</b>
+            </div>
+            <div class="col-md-2">
+                @Html.DisplayFor(model => model.ConsultationType)
+            </div>
+        </div>
+
+
+        <br />
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-secondary" /> &nbsp;|&nbsp;
+                @Html.ActionLink("Cancel", "Index")
+            </div>
+        }
+    </div>
+</div>   

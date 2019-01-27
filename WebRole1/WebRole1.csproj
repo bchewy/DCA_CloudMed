@@ -348,6 +348,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\Consultation.cs" />
+    <Compile Include="Models\ConsultationViewModel.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CourseViewModel.cs" />
     <Compile Include="Models\Doctor.cs" />
@@ -549,6 +550,7 @@
     <Content Include="Views\Courses\Index.cshtml" />
     <Content Include="Views\MedicalEquipments\Create.cshtml" />
     <Content Include="Views\MedicalEquipments\Details.cshtml" />
+    <Content Include="Views\MedicalEquipments\Edit.cshtml" />
     <Content Include="Views\Consultations\Create.cshtml" />
     <Content Include="Views\Consultations\Delete.cshtml" />
     <Content Include="Views\Consultations\Details.cshtml" />
@@ -556,6 +558,7 @@
     <Content Include="Views\Consultations\Index.cshtml" />
     <Content Include="Views\MedicalEquipments\Index.cshtml" />
     <Content Include="Views\MedicalEquipments\Edit.cshtml" />
+    <Content Include="Views\Consultations\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
