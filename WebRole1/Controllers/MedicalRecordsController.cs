@@ -34,13 +34,20 @@ namespace WebRole1.Controllers
             {
                 return HttpNotFound();
             }
-            return View(medicalRecord);
+            MedicalRecordsViewModel medicalRecordsViewModel = new MedicalRecordsViewModel()
+            {
+                Description = medicalRecord.Description,
+                DocURL = medicalRecord.DocURL,
+                Illness = medicalRecord.Illness,
+                ConsultationID = medicalRecord.ConsultationID
+            };
+            return View(medicalRecordsViewModel);
         }
 
         // GET: MedicalRecords/Create
         public ActionResult Create()
         {
-            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "Status");
+            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "ConsultationID");
             return View();
         }
 
@@ -49,17 +56,23 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RecordID,Description,DocURL,Illness,ConsultationID")] MedicalRecord medicalRecord)
+        public ActionResult Create([Bind(Include = "RecordID,Description,DocURL,Illness,ConsultationID")] MedicalRecordsViewModel medicalRecordViewModel)
         {
             if (ModelState.IsValid)
             {
+                var medicalRecord = new MedicalRecord()
+                {
+                    Description = medicalRecordViewModel.Description,
+                    DocURL = medicalRecordViewModel.DocURL,
+                    Illness = medicalRecordViewModel.Illness,
+                    ConsultationID = medicalRecordViewModel.ConsultationID
+                };
                 db.MedicalRecord.Add(medicalRecord);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "Status", medicalRecord.ConsultationID);
-            return View(medicalRecord);
+            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "ConsultationID", medicalRecordViewModel.ConsultationID);
+            return View(medicalRecordViewModel);
         }
 
         // GET: MedicalRecords/Edit/5
@@ -74,8 +87,16 @@ namespace WebRole1.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "Status", medicalRecord.ConsultationID);
-            return View(medicalRecord);
+            MedicalRecordsViewModel medicalRecordsViewModel = new MedicalRecordsViewModel()
+            {
+                Description = medicalRecord.Description,
+                DocURL = medicalRecord.DocURL,
+                Illness = medicalRecord.Illness,
+                ConsultationID = medicalRecord.ConsultationID
+
+            };
+            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "ConsultationID", medicalRecord.ConsultationID);
+            return View(medicalRecordsViewModel);
         }
 
         // POST: MedicalRecords/Edit/5
@@ -83,16 +104,21 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "RecordID,Description,DocURL,Illness,ConsultationID")] MedicalRecord medicalRecord)
+        public ActionResult Edit([Bind(Include = "RecordID,Description,DocURL,Illness,ConsultationID")] MedicalRecordsViewModel medicalRecordViewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(medicalRecord).State = EntityState.Modified;
+                var medicalrecord = db.MedicalRecord.Find(medicalRecordViewModel.ConsultationID);
+                medicalrecord.Description = medicalRecordViewModel.Description;
+                medicalrecord.DocURL = medicalRecordViewModel.DocURL;
+                medicalrecord.Illness = medicalRecordViewModel.Illness;
+                medicalrecord.ConsultationID = medicalRecordViewModel.ConsultationID;
+                db.Entry(medicalRecordViewModel).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "Status", medicalRecord.ConsultationID);
-            return View(medicalRecord);
+            ViewBag.ConsultationID = new SelectList(db.Consultations, "ConsultationID", "ConsultationID", medicalRecordViewModel.ConsultationID);
+            return View(medicalRecordViewModel);
         }
 
         // GET: MedicalRecords/Delete/5

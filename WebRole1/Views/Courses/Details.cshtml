@@ -1,4 +1,4 @@
-﻿@model WebRole1.Models.Course
+﻿@model WebRole1.Models.CourseViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -7,17 +7,9 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Course</h4>
+    <h4>CourseViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Doctor.Specialty)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Doctor.Specialty)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Title)
         </dt>
@@ -48,6 +40,70 @@
 
         <dd>
             @Html.DisplayFor(model => model.CourseFee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DoctorID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DoctorID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Duration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Duration)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Capacity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Capacity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Venue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Venue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.URL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.URL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateReleased)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateReleased)
         </dd>
 
     </dl>

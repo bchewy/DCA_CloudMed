@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebRole1.Models.Course>
+﻿@model IEnumerable<WebRole1.Models.CourseViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -9,10 +9,11 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Doctor.Specialty)
+            @Html.DisplayNameFor(model => model.CourseType)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Title)
@@ -26,14 +27,38 @@
         <th>
             @Html.DisplayNameFor(model => model.CourseFee)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DoctorID)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Duration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Capacity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Venue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.URL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateReleased)
+        </th>*@
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Doctor.Specialty)
-        </td>
+        <th>
+            @Html.DisplayFor(modelItem => item.CourseType)
+        </th>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
@@ -47,9 +72,33 @@
             @Html.DisplayFor(modelItem => item.CourseFee)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CourseID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.CourseID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CourseID })
+            @Html.DisplayFor(modelItem => item.DoctorID)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Duration)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Capacity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Venue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.URL)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateReleased)
+        </td>*@
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.CourseID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.CourseID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.CourseID })
         </td>
     </tr>
 }

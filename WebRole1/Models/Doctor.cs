@@ -15,6 +15,9 @@ namespace WebRole1.Models
         //public int ConsultationID { get; set; }
 
         public string Specialty { get; set; }
+        public string DoctorImageURL { get; set; }
+        public string DoctorThumbnailImageURL { get; set; }
+
 
         public virtual ICollection<Course> Courses { get; set; }
         public virtual ICollection<Consultation> Consultations { get; set; }

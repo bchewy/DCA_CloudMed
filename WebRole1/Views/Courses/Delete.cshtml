@@ -12,14 +12,6 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Doctor.Specialty)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Doctor.Specialty)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Title)
         </dt>
 
@@ -51,13 +43,21 @@
             @Html.DisplayFor(model => model.CourseFee)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.DoctorID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DoctorID)
+        </dd>
+
     </dl>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <input type="submit" value="Delete" class="btn btn-primary" /> |
             @Html.ActionLink("Back to List", "Index")
         </div>
     }

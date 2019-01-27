@@ -9,6 +9,18 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage;
+using Microsoft.Azure;
+using System.IO;
+using WebRole1.DAL;
+using WebRole1.Models;
+using System.Data.Entity;
+using Microsoft.WindowsAzure.Storage.Blob;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using Microsoft.WindowsAzure.Storage.Queue;
+using System.Net.Mail;
+
 
 namespace WorkerRole1
 {

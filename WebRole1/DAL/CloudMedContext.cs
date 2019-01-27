@@ -11,6 +11,12 @@ namespace WebRole1.DAL
         {
         }
 
+        //Added for worker role
+        public CloudMedContext(string dbConnString) : base(dbConnString)
+        {
+            this.Database.CommandTimeout = 300;
+        }
+
         public DbSet<Consultation> Consultations { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
@@ -19,6 +25,8 @@ namespace WebRole1.DAL
         public DbSet<Patient> Patients { get; set; }
 
         public System.Data.Entity.DbSet<WebRole1.Models.PatientViewModel> PatientViewModels { get; set; }
+
+        public System.Data.Entity.DbSet<WebRole1.Models.MedicalEquipmentViewModel> MedicalEquipmentViewModels { get; set; }
         //Table for Person, Seminar or Webinar?
 
     }
