@@ -43,10 +43,10 @@ namespace WebRole1.Controllers
                 Status = medicalEquipment.Status,
 
                 SoftwareVersion = medicalEquipment.SoftwareVersion,
-                /*PurchaseDate = medicalEquipment.PurchaseDate,
+                PurchaseDate = medicalEquipment.PurchaseDate,
                 Warranty = medicalEquipment.Warranty,
                 LastMaintenance = medicalEquipment.LastMaintenance
-                */
+                
             };
             return View(MedicalEquipmentViewModel);
         }

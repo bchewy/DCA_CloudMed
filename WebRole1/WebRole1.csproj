@@ -549,7 +549,6 @@
     <Content Include="Views\Courses\Index.cshtml" />
     <Content Include="Views\MedicalEquipments\Create.cshtml" />
     <Content Include="Views\MedicalEquipments\Details.cshtml" />
-    <Content Include="Views\MedicalEquipments\Edit.cshtml" />
     <Content Include="Views\Consultations\Create.cshtml" />
     <Content Include="Views\Consultations\Delete.cshtml" />
     <Content Include="Views\Consultations\Details.cshtml" />
