@@ -23,6 +23,7 @@ using System.Threading;
 
 namespace WebRole1.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class DoctorsController : Controller
     {
         private CloudMedContext db = new CloudMedContext();
@@ -92,14 +93,57 @@ namespace WebRole1.Controllers
 
 
 
-
+        /*
+         *         public ViewResult Index(string so,string searchString)//so sortOrder 
+        {
+            ViewBag.NameSortParam = String.IsNullOrEmpty(so) ? "Name" : "";
+            ViewBag.DateSortParam = so == "DOB" ? "DOB" : "DOB";
+            var patients = from p in db.Patients select p;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                patients = patients.Where(p => p.Name.Contains(searchString) || p.ICNo.Contains(searchString));
+            }
+            switch (so)
+            {
+                case "Name":
+                    patients = patients.OrderByDescending(p => p.Name);
+                    break;
+                case "DOB":
+                    patients = patients.OrderBy(p => p.DoB);
+                    break;
+                default:
+                    patients = patients.OrderBy(s => s.ICNo);
+                    break;
+            }
+            return View(patients.ToList());
+        }
+        */
 
 
 
         // GET: Doctors
-        public ActionResult Index()
+        public ViewResult Index(string so,string searchString)
         {
-            return View(db.Doctors.ToList());
+            ViewBag.NameSortParam = String.IsNullOrEmpty(so) ? "Name" : "";
+            ViewBag.SpecialSort = so == "Specialty" ? "Specialty" : "Specialty";
+            var doctors = from p in db.Doctors select p;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                doctors = doctors.Where(p => p.Name.Contains(searchString) || p.ICNo.Contains(searchString));
+            }
+            switch (so)
+            {
+                case "Name":
+                    doctors = doctors.OrderByDescending(p => p.Name);
+                    break;
+                case "Specialty":
+                    doctors = doctors.OrderBy(p => p.Specialty);
+                    break;
+                default:
+                    doctors = doctors.OrderBy(s => s.ICNo);
+                    break;
+            }
+            return View(doctors.ToList());
         }
 
         // GET: Doctors/Details/5

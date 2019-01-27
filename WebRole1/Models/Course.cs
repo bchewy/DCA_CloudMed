@@ -18,10 +18,14 @@ namespace WebRole1.Models
         public string Category { get; set; }
         [Display(Name = "Course Fee")]
         public double CourseFee { get; set; }
+        public string CourseImageURL { get; set; }
+
+        public string CourseThumbnailImageURL { get; set; }
 
         [ForeignKey("Doctor")]
         public int DoctorID { get; set; }
 
         public virtual Doctor Doctor { get; set; }
+
     }
 }

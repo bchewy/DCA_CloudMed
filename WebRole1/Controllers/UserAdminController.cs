@@ -1,5 +1,4 @@
-﻿using IdentitySample.Models;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -13,9 +12,9 @@ using System.Web.Mvc;
 using WebRole1;
 using WebRole1.Models;
 
-namespace IdentitySample.Controllers
+namespace WebRole1.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Administrator")]
     public class UsersAdminController : Controller
     {
         public UsersAdminController()

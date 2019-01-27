@@ -1,0 +1,79 @@
+﻿@model IEnumerable<WebRole1.Models.ConsultationViewModel>
+
+<div class="container">
+    <div class="mt-4">
+        <h2 class="text-center mt-2">Consultation</h2>
+        <p class="lead text-center">View all consultations available or Search to see how packed the doctors are!</p>
+
+
+        <div>
+            @using (Html.BeginForm())
+            {
+                <div class="row">
+                    <div class="col-md-10">
+                        @Html.TextBox("searchString", null, new { @class = "form-control", @placeholder = "Search by Doctor's Name" })
+                    </div>
+                    <div class="col-md-2">
+                        <input class="btn btn-block btn-info" type="submit" value="Search" />
+                    </div>
+                </div>
+            }
+        </div>
+        <hr />
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.Label("Doctor Name", "Doctor's Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                </th>
+                <th>
+                    @Html.Label("Patient Name", "Patient's Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TimeStamp)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.QueueNo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ConsultationType)
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.doctor.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.patient.Name)
+                </td>
+                <td>
+                    <span style="color:@item.DateColor">@Html.DisplayFor(modelItem => item.TimeStamp)</span>
+                </td>
+                <td>
+                    <span style="color:@item.QueueColor"> @Html.DisplayFor(modelItem => item.QueueNo)</span>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    <span style="color:@item.typeColor">@Html.DisplayFor(modelItem => item.ConsultationType)</span>
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ConsultationID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ConsultationID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ConsultationID })
+                </td>
+            </tr>
+            }
+
+        </table>
+        <div class="text-center my-2">
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+        </div>
+    </div>
+</div>

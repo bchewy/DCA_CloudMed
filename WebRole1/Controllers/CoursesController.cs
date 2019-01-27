@@ -8,6 +8,15 @@ using System.Web;
 using System.Web.Mvc;
 using WebRole1.DAL;
 using WebRole1.Models;
+using Microsoft.WindowsAzure.Storage.Table.DataServices;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.ServiceRuntime;
+using Microsoft.WindowsAzure.Storage.RetryPolicies;
+using System.Threading.Tasks;
+using System.IO;
+using System.Diagnostics;
 
 namespace WebRole1.Controllers
 {
@@ -15,11 +24,84 @@ namespace WebRole1.Controllers
     {
         private CloudMedContext db = new CloudMedContext();
 
+        private static CloudBlobContainer imagesBlobContainer;
+        public CoursesController()
+        {
+            InitializeStorage();
+        }
+
+        // initialize storage for images
+        private void InitializeStorage()
+        {
+            var storageAccount = CloudStorageAccount.Parse
+            (RoleEnvironment.GetConfigurationSettingValue
+            ("StorageConnectionString"));
+
+            var blobClient = storageAccount.CreateCloudBlobClient();
+            blobClient.DefaultRequestOptions.RetryPolicy = new LinearRetry(TimeSpan.FromSeconds(3), 3);
+            imagesBlobContainer = blobClient.GetContainerReference
+            ("courseimages");
+            imagesBlobContainer.CreateIfNotExists();
+            imagesBlobContainer.SetPermissions
+            (new BlobContainerPermissions
+            {
+                PublicAccess = BlobContainerPublicAccessType.Blob
+            });
+        }
+
+        // asynchronous upload & save blob method
+        private async Task<CloudBlockBlob> UploadAndSaveBlobAsync(HttpPostedFileBase imageFile)
+        {
+            Trace.TraceInformation("Uploading image file {0}",
+            imageFile.FileName);
+            // Create a unique GUID (globally unique identifier)
+            // name for the blob entry
+            string blobName = Guid.NewGuid().ToString() +
+            Path.GetExtension(imageFile.FileName);
+            // Retrieve reference to a blob.
+            CloudBlockBlob imageBlob =
+            imagesBlobContainer.GetBlockBlobReference(blobName);
+            // Create the blob by uploading a local file.
+            using (var fileStream = imageFile.InputStream)
+            {
+                await imageBlob.UploadFromStreamAsync(fileStream);
+            }
+            Trace.TraceInformation("Uploaded image file to {0}",
+            imageBlob.Uri.ToString());
+            return imageBlob;
+        }
+
+
+        // delet da blob
+        private async Task DeleteBlobAsync(string imageURL)
+        {
+            if (!string.IsNullOrWhiteSpace(imageURL))
+            {
+                Uri blobUri = new Uri(imageURL);
+                string blobName = blobUri.Segments
+                [blobUri.Segments.Length - 1];
+                Trace.TraceInformation("Deleting image blob {0}",
+                blobName);
+                CloudBlockBlob blobToDelete = imagesBlobContainer.
+                GetBlockBlobReference(blobName);
+                await blobToDelete.DeleteIfExistsAsync();
+            }
+        }
+
+
+
+
+
+
+
+
         // GET: Courses
-        public ActionResult Index()
+        public ActionResult Index(string courseSO, string searchString)
         {
             List<Course> courses = db.Courses.ToList();
             List<CourseViewModel> courseList = new List<CourseViewModel>();
+
+
             foreach (Course crse in courses)
             {
                 if (crse is Seminar)
@@ -60,8 +142,35 @@ namespace WebRole1.Controllers
                     courseList.Add(cvm);
                 }
             }
+
+
+
+            ViewBag.NameSortParam = String.IsNullOrEmpty(courseSO) ? "Title" : "";
+            ViewBag.DateSortParam = courseSO == "Title" ? "Title" : "Title";
+            var crses = from c in db.Courses select c;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                crses = crses.Where(c => c.Title.Contains(searchString) || c.Description.Contains(searchString) || c.Category.Contains(searchString));
+            }
+            switch (courseSO)
+            {
+
+                case "Title":
+                    crses = crses.OrderBy(p => p.Title);
+                    break;
+                case "Desciption":
+                    crses = crses.OrderBy(p => p.Description);
+                    break;
+                case "Category":
+                    crses = crses.OrderBy(p => p.Category);
+                    break;
+                default:
+                    crses = crses.OrderBy(s => s.CourseID);
+                    break;
+            }
+
+
             return View(courseList);
-            
 
             //var courses = db.Courses.Include(c => c.Doctor);
             //return View(courses.ToList());
@@ -133,10 +242,22 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CourseID,Title,Description,Category,CourseFee,DoctorID,CourseType,Duration,Date,Time,Capacity,Venue,URL,DateReleased")] CourseViewModel courseViewModel)
+        public async Task<ActionResult> Create([Bind(Include = "CourseID,Title,Description,Category,CourseFee,DoctorID,CourseType,Duration,Date,Time,Capacity,Venue,URL,DateReleased")]
+        CourseViewModel courseViewModel, HttpPostedFileBase imageFile)
         {
+            CloudBlockBlob imageBlob = null;
             if (ModelState.IsValid)
             {
+                if (imageFile != null && imageFile.ContentLength != 0)
+                {
+                    imageBlob = await UploadAndSaveBlobAsync
+                    (imageFile);
+                    courseViewModel.CourseImageURL =
+                    imageBlob.Uri.ToString();
+                    Trace.TraceInformation("The Blob URL is:" +
+                    imageBlob.Uri.ToString());
+                }
+
                 if (courseViewModel.CourseType.ToString() == "Seminar")
                 {
                     var seminar = new Seminar
@@ -154,7 +275,7 @@ namespace WebRole1.Controllers
                         Venue = courseViewModel.Venue
                     };
                     db.Courses.Add(seminar);
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                 }
                 else
                 {
@@ -170,7 +291,7 @@ namespace WebRole1.Controllers
                         DateReleased = courseViewModel.DateReleased
                     };
                     db.Courses.Add(webinar);
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                 }
                 return RedirectToAction("Index");
             }
@@ -238,10 +359,21 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CourseID,Title,Description,Category,CourseFee,DoctorID,Duration,Date,Time,Capacity,Venue,URL,DateReleased")] CourseViewModel courseViewModel)
+        public async Task<ActionResult> Edit([Bind(Include = "CourseID,Title,Description,Category,CourseFee,DoctorID,Duration,Date,Time,Capacity,Venue,URL,DateReleased")]
+        CourseViewModel courseViewModel, HttpPostedFileBase imageFile)
         {
+            CloudBlockBlob imageBlob = null;
             if (ModelState.IsValid)
             {
+                if (imageFile != null && imageFile.ContentLength != 0)
+                {
+                    await DeleteBlobAsync(courseViewModel.CourseImageURL);
+                    imageBlob = await UploadAndSaveBlobAsync
+                    (imageFile);
+                    courseViewModel.CourseImageURL =
+                    imageBlob.Uri.ToString();
+                }
+
                 var course = db.Courses.Find(courseViewModel.CourseID);
                 var doctor = db.Doctors.Find(courseViewModel.DoctorID);
 
@@ -262,7 +394,7 @@ namespace WebRole1.Controllers
 
                     seminar.Doctor = doctor;
                     db.Entry(seminar).State = EntityState.Modified;
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
 
                     return RedirectToAction("Index");
                 }
@@ -281,7 +413,7 @@ namespace WebRole1.Controllers
 
                     webinar.Doctor = doctor;
                     db.Entry(webinar).State = EntityState.Modified;
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
 
                     return RedirectToAction("Index");
                 }
@@ -309,11 +441,14 @@ namespace WebRole1.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Course course = db.Courses.Find(id);
+            await DeleteBlobAsync(course.CourseImageURL);
             db.Courses.Remove(course);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
+            Trace.TraceInformation("Deleted frn {0}",
+            course.CourseID);
             return RedirectToAction("Index");
         }
 

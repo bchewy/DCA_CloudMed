@@ -1,17 +1,81 @@
-﻿@{
-    ViewBag.Title = "Contact";
-}
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+﻿
+<head>
+    <style>
+        body {
+            text-align: justify;
+            text-justify: inter-word;
+        }
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+        table {
+        }
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+        th, td {
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                @{
+                    ViewBag.Title = "Contact";
+                    }
+                <h2>@ViewBag.Title.</h2>
+                <div id="description">
+                    <h5>
+                        Address
+                    </h5>
+                    <address>
+                        <a href="https://www.google.com/maps/search/100%20Bukit%20Timah%20Road%20Singapore%20229899">100 Bukit Timah Road Singapore 229899</a><br />
+                    </address>
+                </div>
+                <table class="container" border="1">
+                    <tr>
+                        <th>Service</th>
+                        <th>Contact</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>General Enquiries (24hrs)</strong>
+                        </td>
+                        <td>
+                            +65 6-CALL-MED | +65 6-2255-633
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Admission Enquiries</strong><br />
+                            Monday to Friday (exclude Public Holidays)<br />
+                            8.30am to 5.30pm
+                        </td>
+                        <td>
+                            +65 6394 1200
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Feedback</strong><br />
+                            Office of Patient Experience Hotline (Toll-Free)<br />
+                            Monday to Friday, 8.30am to 5.30pm<br />
+                        </td>
+                        <td>
+                            1800 293 3297
+                        </td>
+                    </tr>
+                </table>
+                <br />
+
+                <h5>
+                    Email
+                </h5>
+                <address>
+                    <strong>Support:</strong>   <a href="mailto:Support@cloudmed.com">Support@cloudmed.com</a><br />
+                    <strong>Marketing:</strong> <a href="mailto:Marketing@cloudmed.com">Marketing@cloudmed.com</a>
+                </address>
+
+            </div>
+        </div>
+    </div>
+</body>
