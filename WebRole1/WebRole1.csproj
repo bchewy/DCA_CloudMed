@@ -336,6 +336,14 @@
     <Compile Include="Migrations\201901261902161_thumbnailDoc.Designer.cs">
       <DependentUpon>201901261902161_thumbnailDoc.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901270346244_still fixing medicalequipment vm.cs" />
+    <Compile Include="Migrations\201901270346244_still fixing medicalequipment vm.Designer.cs">
+      <DependentUpon>201901270346244_still fixing medicalequipment vm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901270602285_trying to fix me vm.cs" />
+    <Compile Include="Migrations\201901270602285_trying to fix me vm.Designer.cs">
+      <DependentUpon>201901270602285_trying to fix me vm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -525,7 +533,6 @@
     <Content Include="Views\MedicalRecords\Details.cshtml" />
     <Content Include="Views\MedicalRecords\Edit.cshtml" />
     <Content Include="Views\MedicalRecords\Index.cshtml" />
-    <Content Include="Views\MedicalEquipments\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
@@ -541,6 +548,7 @@
     <Content Include="Views\Courses\Details.cshtml" />
     <Content Include="Views\Courses\Index.cshtml" />
     <Content Include="Views\MedicalEquipments\Create.cshtml" />
+    <Content Include="Views\MedicalEquipments\Edit.cshtml" />
     <Content Include="Views\MedicalEquipments\Details.cshtml" />
     <Content Include="Views\MedicalEquipments\Edit.cshtml" />
     <Content Include="Views\Consultations\Create.cshtml" />
@@ -548,6 +556,7 @@
     <Content Include="Views\Consultations\Details.cshtml" />
     <Content Include="Views\Consultations\Edit.cshtml" />
     <Content Include="Views\Consultations\Index.cshtml" />
+    <Content Include="Views\MedicalEquipments\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -632,6 +641,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901261902161_thumbnailDoc.resx">
       <DependentUpon>201901261902161_thumbnailDoc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901270346244_still fixing medicalequipment vm.resx">
+      <DependentUpon>201901270346244_still fixing medicalequipment vm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901270602285_trying to fix me vm.resx">
+      <DependentUpon>201901270602285_trying to fix me vm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
