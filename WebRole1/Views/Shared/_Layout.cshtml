@@ -13,6 +13,9 @@
         nav a{
             color:white;
         }
+        ul.navbar-nav.mr-auto > li.nav-item.dropdown.show > ul.dropdown-menu.show > li > a{
+            color:black;
+        }
         table.table tbody tr td > a {
             color: black;
         }
@@ -45,15 +48,25 @@
                 <li class="nav-item px-2">@Html.ActionLink("MedicalRecords", "Index", "MedicalRecords") </li>
                 <li class="nav-item px-2">@Html.ActionLink("MedicalEquipments", "Index", "MedicalEquipments") </li>
                 <li class="nav-item px-2">@Html.ActionLink("Courses", "Index", "Courses") </li>
+                @if (Request.IsAuthenticated && User.IsInRole("Administrator"))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                            Admin<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="p-2">@Html.ActionLink("Roles Admin", "Index", "RolesAdmin")</li>
+                            <li class="p-2">@Html.ActionLink("Users Admin", "Index", "UsersAdmin")</li>
+                        </ul>
+                    </li>
+                }
 
             </ul>
             @Html.Partial("_LoginPartial")
         </div>
     </nav>
     <div class="h-100">
-        <div>
             @RenderBody()
-        </div>
        
         <hr />
         <footer class="text-center lead">

@@ -10,8 +10,7 @@ using WebRole1.Models;
 
 namespace WebRole1.DAL
 {
-    public class IdentityInitializer :
-DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+    public class IdentityInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
     {
         protected override void Seed(ApplicationDbContext context)
         {
@@ -20,10 +19,9 @@ DropCreateDatabaseIfModelChanges<ApplicationDbContext>
         }
         public static void InitializeIdentityForEF(ApplicationDbContext db)
         {
-            var userManager = HttpContext.Current.GetOwinContext()
-            .GetUserManager<ApplicationUserManager>();
-            var roleManager = HttpContext.Current.GetOwinContext()
-            .Get<ApplicationRoleManager>();
+            var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
+
             //Define a user account and its role
             string name = "admin@admin.com";
             string password = "Pa$$w0rd";
