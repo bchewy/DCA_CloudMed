@@ -9,56 +9,77 @@
 <div>
     <h4>Consultation</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.Label("Doctor Name", "Doctor's Name", htmlAttributes: new { @class = "control-label col-md-2" })
-        </dt>
+    <div class="row">
+        <div class="control-label col-md-3 col-lg-1">
+            <b>@Html.Label("Doctor Name", "Doctor's Name")</b>
+        </div>
+        <div class="col-md-2">
 
-        <dd>
             @Html.DisplayFor(model => model.Doctor.Name)
-        </dd>
+        </div>
+    </div>
 
-        <dt>
-            @Html.Label("Patient Name", "Patient's Name", htmlAttributes: new { @class = "control-label col-md-2" })
-        </dt>
+    <div class="row">
+        <div class="control-label col-md-3 col-lg-1">
+            <b>@Html.Label("Patient Name", "Patient's Name")</b>
+        </div>
+        <div class="col-md-2">
 
-        <dd>
             @Html.DisplayFor(model => model.Patient.Name)
-        </dd>
+        </div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.QueueNo)
-        </dt>
+    <div class="row">
+        <div class="control-label col-md-3 col-lg-1">
+            <b>@Html.DisplayNameFor(model => model.QueueNo)</b>
+        </div>
+        <div class="col-md-2">
 
-        <dd>
             @Html.DisplayFor(model => model.QueueNo)
-        </dd>
+        </div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TimeStamp)
-        </dt>
-
-        <dd>
+    <div class="row">
+        <div class="control-label col-md-3 col-lg-1">
+            <b> @Html.DisplayNameFor(model => model.TimeStamp)</b>
+        </div>
+        <div class="col-md-2">
             @Html.DisplayFor(model => model.TimeStamp)
-        </dd>
+        </div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
+    <div class="row">
+        <div class="control-label col-md-3 col-lg-1">
+            <b> @Html.DisplayNameFor(model => model.Status)</b>
+        </div>
+        <div class="col-md-2">
             @Html.DisplayFor(model => model.Status)
-        </dd>
+        </div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ConsultationType)
-        </dt>
-
-        <dd>
+    <div class="row">
+        <div class="control-label col-md-3 col-lg-1">
+            <b> @Html.DisplayNameFor(model => model.ConsultationType)</b>
+        </div>
+        <div class="col-md-2">
             @Html.DisplayFor(model => model.ConsultationType)
-        </dd>
+        </div>
+    </div>
+    
+</div>
 
-    </dl>
+<hr />
+
+<div class="row">
+    <div class="control-label col-md-4 col-lg-2">
+        <b>@Html.DisplayNameFor(m=>m.i)</b>
+    </div>
+    <div class="control-label col-md-4 col-lg-2">
+        test2
+    </div>
+    <div class="control-label col-md-4 col-lg-2">
+        test3
+    </div>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ConsultationID }) |

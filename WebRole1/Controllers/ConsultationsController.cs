@@ -16,9 +16,28 @@ namespace WebRole1.Controllers
         private CloudMedContext db = new CloudMedContext();
 
         // GET: Consultations
-        public ActionResult Index()
+        public ActionResult Index(string Queueso, string searchString)
         {
-            var consultations = from item in db.Consultations orderby item.QueueNo ascending select item;
+            ViewBag.NameSortParam = String.IsNullOrEmpty(Queueso) ? "QueueNo" : "";
+            ViewBag.QueueSortParam = Queueso == "QueueNo" ? "QueueNo" : "QueueNodesc";
+            var consultations = db.Consultations.Include(c => c.Doctor).Include(c => c.Patient);
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                consultations = consultations.Where(p => p.Doctor.Name.Contains(searchString));
+                
+            }
+            switch (Queueso)
+            {
+                case "QueueNo":
+                    consultations = consultations.OrderBy(o => o.QueueNo);
+                    break;
+                case "QueueNodesc":
+                    consultations = consultations.OrderByDescending(o => o.QueueNo);
+                    break;
+                default:
+                    break;
+            }
+
             return View(consultations.ToList());
         }
 
@@ -34,6 +53,7 @@ namespace WebRole1.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(consultation);
         }
 
@@ -50,29 +70,18 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TimeStamp,Status,ConsultationType,PatientID,DoctorID")] ConsultationViewModel consultationViewModel)
+        public ActionResult Create([Bind(Include = "ConsultationID,QueueNo,TimeStamp,Status,ConsultationType,PatientID,DoctorID")] Consultation consultation)
         {
             if (ModelState.IsValid)
             {
-                var query = db.Consultations.Max(r => r.ConsultationID);
-                var querypatient = from item in db.Patients select item;
-                querypatient = querypatient.Where(a => a.Name == consultationViewModel.PatientName);
-                var querydoctor = from item in db.Doctors select item;
-                querydoctor = querydoctor.Where(a => a.Name == consultationViewModel.DoctorName);
-                var consultation = new Consultation() {
-                    TimeStamp = consultationViewModel.TimeStamp,
-                    Status = consultationViewModel.Status,
-                    ConsultationType = consultationViewModel.ConsultationType,
-                    QueueNo = query+1
-                };
-
                 db.Consultations.Add(consultation);
                 db.SaveChanges();
-
                 return RedirectToAction("Index");
             }
-            
-            return View(consultationViewModel);
+
+            ViewBag.DoctorID = new SelectList(db.Doctors, "DoctorID", "Name", consultation.DoctorID);
+            ViewBag.PatientID = new SelectList(db.Patients, "PatientID", "Name", consultation.PatientID);
+            return View(consultation);
         }
 
         // GET: Consultations/Edit/5
@@ -87,8 +96,8 @@ namespace WebRole1.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.DoctorID = new SelectList(db.Doctors, "DoctorID", "Name", consultation.DoctorID);
-            ViewBag.PatientID = new SelectList(db.Patients, "PatientID", "Name", consultation.PatientID);
+            ViewBag.DoctorID = new SelectList(db.Doctors, "DoctorID", "Specialty", consultation.DoctorID);
+            ViewBag.PatientID = new SelectList(db.Patients, "PatientID", "PatientImageURL", consultation.PatientID);
             return View(consultation);
         }
 
@@ -105,8 +114,8 @@ namespace WebRole1.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.DoctorID = new SelectList(db.Doctors, "DoctorID", "Name", consultation.DoctorID);
-            ViewBag.PatientID = new SelectList(db.Patients, "PatientID", "Name", consultation.PatientID);
+            ViewBag.DoctorID = new SelectList(db.Doctors, "DoctorID", "Specialty", consultation.DoctorID);
+            ViewBag.PatientID = new SelectList(db.Patients, "PatientID", "PatientImageURL", consultation.PatientID);
             return View(consultation);
         }
 
