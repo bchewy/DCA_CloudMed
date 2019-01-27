@@ -1,0 +1,87 @@
+﻿@model WebRole1.Models.Consultation
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Consultation</h4>
+    <hr />
+    <div class="row">
+        <div class="control-label col-md-3 col-lg-1">
+            <b>@Html.Label("Doctor Name", "Doctor's Name")</b>
+        </div>
+        <div class="col-md-2">
+
+            @Html.DisplayFor(model => model.Doctor.Name)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="control-label col-md-3 col-lg-1">
+            <b>@Html.Label("Patient Name", "Patient's Name")</b>
+        </div>
+        <div class="col-md-2">
+
+            @Html.DisplayFor(model => model.Patient.Name)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="control-label col-md-3 col-lg-1">
+            <b>@Html.DisplayNameFor(model => model.QueueNo)</b>
+        </div>
+        <div class="col-md-2">
+
+            @Html.DisplayFor(model => model.QueueNo)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="control-label col-md-3 col-lg-1">
+            <b> @Html.DisplayNameFor(model => model.TimeStamp)</b>
+        </div>
+        <div class="col-md-2">
+            @Html.DisplayFor(model => model.TimeStamp)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="control-label col-md-3 col-lg-1">
+            <b> @Html.DisplayNameFor(model => model.Status)</b>
+        </div>
+        <div class="col-md-2">
+            @Html.DisplayFor(model => model.Status)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="control-label col-md-3 col-lg-1">
+            <b> @Html.DisplayNameFor(model => model.ConsultationType)</b>
+        </div>
+        <div class="col-md-2">
+            @Html.DisplayFor(model => model.ConsultationType)
+        </div>
+    </div>
+    
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="control-label col-md-4 col-lg-2">
+        <b>@Html.DisplayNameFor(m=>m.i)</b>
+    </div>
+    <div class="control-label col-md-4 col-lg-2">
+        test2
+    </div>
+    <div class="control-label col-md-4 col-lg-2">
+        test3
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ConsultationID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

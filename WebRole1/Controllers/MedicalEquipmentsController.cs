@@ -62,7 +62,7 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EquipmentID,Name,Brand,SerialNumber,Status,SoftwareVersion")] MedicalEquipmentViewModel medicalEquipmentViewModel)
+        public ActionResult Create([Bind(Include = "EquipmentID,Name,Brand,SerialNumber,Status,SoftwareVersion,Warranty,PurchaseDate,LastMaintenance")] MedicalEquipmentViewModel medicalEquipmentViewModel)
 
         {
             if (ModelState.IsValid)
@@ -74,11 +74,10 @@ namespace WebRole1.Controllers
                     SerialNumber = medicalEquipmentViewModel.SerialNumber,
                     Status = medicalEquipmentViewModel.Status,
                     SoftwareVersion = medicalEquipmentViewModel.SoftwareVersion,
-                    /*
                     Warranty = medicalEquipmentViewModel.Warranty,
                     PurchaseDate = medicalEquipmentViewModel.PurchaseDate,
                     LastMaintenance = medicalEquipmentViewModel.LastMaintenance
-                */
+
 
                 };
 
@@ -116,11 +115,10 @@ namespace WebRole1.Controllers
                 SerialNumber = medicalEquipment.SerialNumber,
                 Status = medicalEquipment.Status,
                 SoftwareVersion = medicalEquipment.SoftwareVersion,
-                /*
-                Warranty =medicalEquipment.Warranty,
+                Warranty = medicalEquipment.Warranty,
                 PurchaseDate = medicalEquipment.PurchaseDate,
                 LastMaintenance = medicalEquipment.LastMaintenance
-                */
+
             };
 
             return View(MedicalEquimentViewModel);
@@ -133,7 +131,7 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EquipmentID,Name,Brand,SerialNumber,Status,SoftwareVersion")] MedicalEquipmentViewModel MedicalEquipmentViewModel)
+        public ActionResult Edit([Bind(Include = "EquipmentID,Name,Brand,SerialNumber,Status,SoftwareVersion,Warranty,PurchaseDate,LastMaintenance")] MedicalEquipmentViewModel MedicalEquipmentViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -144,12 +142,11 @@ namespace WebRole1.Controllers
                 medicalequipment.SerialNumber = MedicalEquipmentViewModel.SerialNumber;
                 medicalequipment.Status = MedicalEquipmentViewModel.Status;
                 medicalequipment.SoftwareVersion = MedicalEquipmentViewModel.SoftwareVersion;
-                /*
                 medicalequipment.Warranty = MedicalEquipmentViewModel.Warranty;
                 medicalequipment.PurchaseDate = MedicalEquipmentViewModel.PurchaseDate;
                 medicalequipment.LastMaintenance = MedicalEquipmentViewModel.LastMaintenance;
-                */
-                
+
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
