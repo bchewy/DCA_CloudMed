@@ -44,55 +44,69 @@ namespace WebRole1.Controllers
                 default:
                     break;
             }
-            List<ConsultationViewModel> consultVMList = new List<ConsultationViewModel>();
-            foreach (Consultation consult in db.Consultations)
+            if (consultations!=null)
             {
-                ConsultationViewModel consultVM = new ConsultationViewModel();
-                consultVM.ConsultationType = consult.ConsultationType;
-                consultVM.QueueNo = consult.QueueNo;
-                consultVM.Status = consult.Status;
-                consultVM.TimeStamp = consult.TimeStamp;
-                consultVM.ConsultationID = consult.ConsultationID;
-                consultVM.patient = consult.Patient;
-                consultVM.doctor = consult.Doctor;
-                consultVM.QueueColor = "green";
-                DateTime thisDay = DateTime.Today;
-                if (consult.TimeStamp >= thisDay)
+                List<ConsultationViewModel> consultVMList = new List<ConsultationViewModel>();
+                foreach (Consultation consult in db.Consultations)
                 {
-                    consultVM.DateColor = "blue";
+                    ConsultationViewModel consultVM = new ConsultationViewModel();
+                    if (userID == null)
+                    {
+                        consultVM.patient = null;
+                        consultVM.doctor = null;
+                    }
+                    else
+                    {
+                        consultVM.patient = consult.Patient;
+                        consultVM.doctor = consult.Doctor;
+                    }
+                    consultVM.ConsultationType = consult.ConsultationType;
+                    consultVM.QueueNo = consult.QueueNo;
+                    consultVM.Status = consult.Status;
+                    consultVM.TimeStamp = consult.TimeStamp;
+                    consultVM.ConsultationID = consult.ConsultationID;
+                    consultVM.QueueColor = "green";
+                    DateTime thisDay = DateTime.Today;
+                    if (consult.TimeStamp >= thisDay)
+                    {
+                        consultVM.DateColor = "blue";
+                    }
+                    else
+                    {
+                        consultVM.DateColor = "brown";
+                    }
+                    if (consult.QueueNo > 4)
+                    {
+                        consultVM.QueueColor = "orange";
+                    }
+                    else if (consult.QueueNo > 9)
+                    {
+                        consultVM.QueueColor = "red";
+                    }
+                    switch (consult.ConsultationType)
+                    {
+                        case "Urgent":
+                            consultVM.typeColor = "red";
+                            break;
+                        case "Normal":
+                            consultVM.typeColor = "orange";
+                            break;
+                        case "When Available":
+                            consultVM.typeColor = "green";
+                            break;
+                        default:
+                            break;
+                    }
+                    consultVMList.Add(consultVM);
                 }
-                else
-                {
-                    consultVM.DateColor = "brown";
-                }
-                if (consult.QueueNo > 4)
-                {
-                    consultVM.QueueColor = "orange";
-                }
-                else if (consult.QueueNo > 9)
-                {
-                    consultVM.QueueColor = "red";
-                }
-                switch (consult.ConsultationType)
-                {
-                    case "Urgent":
-                        consultVM.typeColor = "red";
-                        break;
-                    case "Normal":
-                        consultVM.typeColor = "orange";
-                        break;
-                    case "When Available":
-                        consultVM.typeColor = "green";
-                        break;
-                    default:
-                        break;
-                }
-                consultVMList.Add(consultVM);
+
+                return View("Index", consultVMList);
             }
+            return View();
             
-            return View("Index", consultVMList);
         }
         // GET: Consultations/Details/5
+        [Authorize(Roles = "Administrator, Patient, Doctor")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -162,7 +176,7 @@ namespace WebRole1.Controllers
         }
 
         // GET: Consultations/Edit/5
-        [Authorize(Roles = "Administrator, Patient")]
+        [Authorize(Roles = "Administrator, Patient, Doctor")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -184,7 +198,7 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator, Patient")]
+        [Authorize(Roles = "Administrator, Patient, Doctor")]
         public ActionResult Edit([Bind(Include = "ConsultationID,QueueNo,TimeStamp,Status,ConsultationType,PatientID,DoctorID")] Consultation consultation)
         {
             if (ModelState.IsValid)
@@ -207,7 +221,7 @@ namespace WebRole1.Controllers
         }
 
         // GET: Consultations/Delete/5
-        [Authorize(Roles = "Administrator, Patient")]
+        [Authorize(Roles = "Administrator, Patient, Doctor")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -223,7 +237,7 @@ namespace WebRole1.Controllers
         }
 
         // POST: Consultations/Delete/5
-        [Authorize(Roles = "Administrator, Patient")]
+        [Authorize(Roles = "Administrator, Patient, Doctor")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
