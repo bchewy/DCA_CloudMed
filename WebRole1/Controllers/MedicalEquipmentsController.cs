@@ -16,7 +16,7 @@ namespace WebRole1.Controllers
         private CloudMedContext db = new CloudMedContext();
 
         // GET: MedicalEquipments
-        //[Authorize(Roles = "Administrator, Doctor")]
+        [Authorize(Roles = "Administrator")]
         public ViewResult Index(string so, string searchString)
         {
    
@@ -37,15 +37,15 @@ namespace WebRole1.Controllers
                     break;
 
             }
-            return View(medicalequipment.ToList());
-            //return View(db.MedicalEquipment.ToList());
+            //return View(medicalequipment.ToList());
+            return View(db.MedicalEquipment.ToList());
         }
 
 
 
 
         // GET: MedicalEquipments/Details/5
-        [Authorize(Roles = "Administrator, Doctor")]
+        [Authorize(Roles = "Administrator")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -75,7 +75,7 @@ namespace WebRole1.Controllers
         }
 
         // GET: MedicalEquipments/Create
-        [Authorize(Roles = "Administrator, Doctor")]
+        [Authorize(Roles = "Administrator")]
         public ActionResult Create()
         {
             return View();
@@ -84,7 +84,7 @@ namespace WebRole1.Controllers
         // POST: MedicalEquipments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Administrator, Doctor")]
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "EquipmentID,Name,Brand,SerialNumber,Status,SoftwareVersion,Warranty,PurchaseDate,LastMaintenance")] MedicalEquipmentViewModel medicalEquipmentViewModel)
@@ -122,7 +122,7 @@ namespace WebRole1.Controllers
 
 
         // GET: MedicalEquipments/Edit/5
-        [Authorize(Roles = "Administrator, Doctor")]
+        [Authorize(Roles = "Administrator")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -157,7 +157,7 @@ namespace WebRole1.Controllers
         // POST: MedicalEquipments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Administrator, Doctor")]
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "EquipmentID,Name,Brand,SerialNumber,Status,SoftwareVersion,Warranty,PurchaseDate,LastMaintenance")] MedicalEquipmentViewModel MedicalEquipmentViewModel)
@@ -185,7 +185,7 @@ namespace WebRole1.Controllers
 
 
         // GET: MedicalEquipments/Delete/5
-        [Authorize(Roles = "Administrator, Doctor")]
+       [Authorize(Roles = "Administrator")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -201,7 +201,7 @@ namespace WebRole1.Controllers
         }
 
         // POST: MedicalEquipments/Delete/5
-        [Authorize(Roles = "Administrator, Doctor")]
+        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
