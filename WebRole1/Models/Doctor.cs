@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -14,8 +16,14 @@ namespace WebRole1.Models
         //[ForeignKey("Consultation")]
         //public int ConsultationID { get; set; }
 
+        [DisplayName("Speciality")]
+        [Required(ErrorMessage = "Key in the doctor's speciality!")]
         public string Specialty { get; set; }
+
+        [DisplayName("Doctor image")]
         public string DoctorImageURL { get; set; }
+
+        [DisplayName("Thumbnail")]
         public string DoctorThumbnailImageURL { get; set; }
 
 

@@ -32,10 +32,21 @@ namespace WebRole1.Migrations
                     EmailAddr="jackwindsor@jackwindsor.com",
                     Address="Buckingham Palace",
                     DoB =new DateTime(1932,2,2)
+                },
+                                new Patient{
+                    ICNo ="S131234123D",
+                    Name="Kelly Windsor",
+                    Gender='F',
+                    Citizenship="Singaporean",
+                    EmailAddr="kelly@jacks.com",
+                    Address="Wellington Palace",
+                    DoB =new DateTime(1999,2,2)
                 }
+
             };
             patients.ForEach(p => context.Patients.AddOrUpdate(x => x.Name, p));
             context.SaveChanges();
+
         }
     }
 }

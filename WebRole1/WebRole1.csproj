@@ -364,6 +364,14 @@
     <Compile Include="Migrations\201901271957236_final db.Designer.cs">
       <DependentUpon>201901271957236_final db.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901280047044_adddataannotationpatientperson.cs" />
+    <Compile Include="Migrations\201901280047044_adddataannotationpatientperson.Designer.cs">
+      <DependentUpon>201901280047044_adddataannotationpatientperson.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901280049326_adddataannotationDoctor.cs" />
+    <Compile Include="Migrations\201901280049326_adddataannotationDoctor.Designer.cs">
+      <DependentUpon>201901280049326_adddataannotationDoctor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -682,6 +690,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901271957236_final db.resx">
       <DependentUpon>201901271957236_final db.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901280047044_adddataannotationpatientperson.resx">
+      <DependentUpon>201901280047044_adddataannotationpatientperson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901280049326_adddataannotationDoctor.resx">
+      <DependentUpon>201901280049326_adddataannotationDoctor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
