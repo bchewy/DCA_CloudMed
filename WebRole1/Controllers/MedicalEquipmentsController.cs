@@ -17,16 +17,11 @@ namespace WebRole1.Controllers
 
         // GET: MedicalEquipments
         [Authorize(Roles = "Administrator")]
-        public ViewResult Index(string so, string searchString)
+        public ViewResult Index(string so)
         {
-   
-            
+              
             ViewBag.NameSortParam = String.IsNullOrEmpty(so) ? "Name" : "";
             var medicalequipment = from me in db.MedicalEquipment select me;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                medicalequipment = medicalequipment.Where(me => me.Name.Contains(searchString));
-            }
             switch (so)
             {
                 case "Name":
@@ -37,8 +32,7 @@ namespace WebRole1.Controllers
                     break;
 
             }
-            //return View(medicalequipment.ToList());
-            return View(db.MedicalEquipment.ToList());
+            return View(medicalequipment.ToList());
         }
 
 
